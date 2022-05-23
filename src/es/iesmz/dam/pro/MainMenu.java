@@ -13,6 +13,7 @@ public class MainMenu extends JFrame {
             JFrame mainMenu = new MainMenu();
             mainMenu.setSize(300,400);
             mainMenu.setVisible(true);
+            System.out.println("Hola mundo");
         });
     }
 }
