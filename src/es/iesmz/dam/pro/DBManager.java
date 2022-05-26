@@ -16,9 +16,7 @@ public class DBManager {
     // Loading the jdbc driver
     public static boolean loadDriver() {
         try {
-            System.out.print("Cargando Driver...");
             Class.forName("com.mysql.cj.jdbc.Driver");
-            System.out.println("OK!");
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -29,9 +27,7 @@ public class DBManager {
     // Conecting with the db
     public static boolean connect() {
         try {
-            System.out.print("Conectando a la base de datos...");
             conn = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
-            System.out.println("OK!");
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -42,9 +38,7 @@ public class DBManager {
     // closing the connection with the db.
     public static void close() {
         try {
-            System.out.print("Cerrando la conexión...");
             conn.close();
-            System.out.println("OK!");
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
