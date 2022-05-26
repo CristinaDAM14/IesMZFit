@@ -30,16 +30,48 @@ public class MainMenu extends JFrame {
 
         };
     }
-
+    /* Listener for login, checks if textfields username and password are not empty/null
+       then call the DBManager to check if there's a username matching that password in the database
+       if there's a user matching that username and password then we call a menu depending of his userlevel
+       1 -> Administrator
+       2 -> Monitor
+       3 -> User
+     */
     private ActionListener listenerSignIn() {
         return l -> {
             String userName = textFieldUserLogin.getText();
             char[] passwordChars = passwordFieldLogin.getPassword();
-            if (userName != null && userName.matches("^[0-9]*$") && passwordChars.length != 0){
-                String userPassword = Arrays.toString(passwordChars);
-
+            if (userName != null && passwordChars.length != 0){
+                String userPassword = String.valueOf(passwordChars);
+                int userLevel = DBManager.getLoginLvl(userName,userPassword);
+                switch (userLevel){
+                    case 1 -> menuAdmin();
+                    case 2 -> menuMonitor();
+                    case 3 -> menuUser();
+                    default -> JOptionPane.showMessageDialog(null,"Username or Password not matching"
+                            ,"Error: Login failed",JOptionPane.ERROR_MESSAGE);
+                }
             }
         };
+    }
+
+
+    private void menuUser() {
+        JDialog userMenu = new JDialUserMenu();
+        userMenu.setSize(300,300);
+        userMenu.setVisible(true);
+    }
+
+    private void menuMonitor() {
+        JDialog monitorMenu = new JDialMonitorMenu();
+        monitorMenu.setSize(300,300);
+        monitorMenu.setVisible(true);
+    }
+
+    private void menuAdmin() {
+        JDialog adminMenu = new JDialAdminMenu();
+        adminMenu.setSize(300,300);
+        adminMenu.setVisible(true);
     }
 
     private void setText() {
@@ -56,6 +88,8 @@ public class MainMenu extends JFrame {
             JFrame mainMenu = new MainMenu();
             mainMenu.setSize(300,400);
             mainMenu.setVisible(true);
+            DBManager.loadDriver();
+            DBManager.connect();
 
             // Method yo close db connection when closing the window
             mainMenu.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
