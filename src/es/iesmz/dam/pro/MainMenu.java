@@ -7,6 +7,7 @@ public class MainMenu extends JFrame {
 
     private JButton button1;
     private JPanel panel1;
+    private JSpinner spinner1;
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(()->{
