@@ -15,4 +15,8 @@ public class MainMenu extends JFrame {
             mainMenu.setVisible(true);
         });
     }
+
+    public MainMenu() {
+        setContentPane(panel1);
+    }
 }
