@@ -52,9 +52,4 @@ public class MostrarPersona extends JDialog {
 
     }
 
-    public static void main(String[] args) {
-        MostrarPersona dialog = new MostrarPersona();
-        dialog.setSize(600,400);
-        dialog.setVisible(true);
-    }
 }
