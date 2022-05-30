@@ -55,9 +55,5 @@ public class RegistrarPersona extends JDialog {
 
     }
 
-    public static void main(String[] args) {
-        RegistrarPersona dialog = new RegistrarPersona();
-        dialog.setSize(600,400);
-        dialog.setVisible(true);
-    }
+
 }
