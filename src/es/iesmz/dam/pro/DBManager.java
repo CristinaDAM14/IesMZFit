@@ -1,6 +1,8 @@
 package es.iesmz.dam.pro;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DBManager {
     private static Connection conn = null;
@@ -18,6 +20,18 @@ public class DBManager {
     private static final String DB_LOGIN_USR = "Username";
     private static final String DB_LOGIN_PSWD = "Password";
     private static final String DB_LOGIN_USRLVL = "UserLevel";
+
+    // Conf for Activities
+    private static final String DB_ACTIVIDADES = "Actividades";
+    private static final String DB_ACTIVIDADES_SELECT = "Select * from "+ DB_ACTIVIDADES;
+    private static final String DB_ACT_ID = "codigo_actividades";
+    private static final String DB_ACT_NOMBRE = "nombre";
+    private static final String DB_ACT_DURACION = "duracion";
+    private static final String DB_ACT_HORARIO = "horario";
+    private static final String DB_ACT_TURNO = "turno";
+    private static final String DB_ACT_CALORIAS = "cant_calorias";
+    private static final String DB_ACT_AFORO = "aforo";
+    private static final String DB_ACT_DIFICULAD = "dificultad";
 
 
 
@@ -76,5 +90,64 @@ public class DBManager {
             ex.printStackTrace();
             return -1;
         }
+    }
+    public static ResultSet getActivities(int resultSetType, int resultSetConcurrency) {
+        try {
+            Statement stmt = conn.createStatement(resultSetType, resultSetConcurrency);
+            return stmt.executeQuery(DB_ACTIVIDADES_SELECT);
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static List<Activity> getActivitiesList(){
+        List<Activity> activities = new ArrayList<>();
+        try {
+            ResultSet rs = getActivities(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            while (rs.next()) {
+                int id = rs.getInt(DB_ACT_ID);
+                String nombre = rs.getString(DB_ACT_NOMBRE);
+                int duracion = rs.getInt(DB_ACT_DURACION);
+                String horario = rs.getString(DB_ACT_HORARIO);
+                int turno = rs.getInt(DB_ACT_TURNO);
+                int calorias = rs.getInt(DB_ACT_CALORIAS);
+                int aforo = rs.getInt(DB_ACT_AFORO);
+                String dificultad = rs.getString(DB_ACT_DIFICULAD);
+                activities.add(new Activity(id,nombre,duracion,horario,turno,calorias,aforo,dificultad));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return activities;
+    }
+
+    public static boolean addActivity(Activity activity) {
+        try {
+            // Obtenemos la tabla
+            ResultSet rs = getActivities(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+
+            // Insertamos el nuevo registro
+            rs.moveToInsertRow();
+            rs.updateString(DB_ACT_NOMBRE, activity.getName());
+            rs.updateInt(DB_ACT_DURACION, activity.getDuration());
+            rs.updateString(DB_ACT_HORARIO,activity.getSchedule());
+            rs.updateInt(DB_ACT_TURNO, activity.getTurn());
+            rs.updateInt(DB_ACT_CALORIAS, activity.getCalories());
+            rs.updateInt(DB_ACT_AFORO,activity.getCapacity());
+            rs.updateString(DB_ACT_DIFICULAD, activity.getDifficulty());
+            rs.insertRow();
+
+            // Todo bien, cerramos ResultSet y devolvemos true
+            rs.close();
+            return true;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+
     }
 }
