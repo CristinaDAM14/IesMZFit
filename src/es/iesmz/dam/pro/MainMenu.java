@@ -91,7 +91,7 @@ public class MainMenu extends JFrame {
             DBManager.loadDriver();
             DBManager.connect();
 
-            // Method yo close db connection when closing the window
+            // Method to close db connection when closing the window
             mainMenu.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
             mainMenu.addWindowListener(new WindowAdapter() {
                 public void windowClosing(WindowEvent e) {
