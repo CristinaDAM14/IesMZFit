@@ -56,7 +56,7 @@
             </constraints>
             <properties/>
             <border type="line">
-              <color color="-6184543"/>
+              <color color="-12171706"/>
             </border>
             <children>
               <component id="377e3" class="javax.swing.JLabel">
@@ -115,7 +115,7 @@
             </constraints>
             <properties/>
             <border type="line">
-              <color color="-6184543"/>
+              <color color="-12171706"/>
             </border>
             <children>
               <component id="794de" class="javax.swing.JLabel">
@@ -174,7 +174,7 @@
             </constraints>
             <properties/>
             <border type="line">
-              <color color="-6184543"/>
+              <color color="-12171706"/>
             </border>
             <children>
               <component id="3ea60" class="javax.swing.JLabel">
@@ -233,7 +233,7 @@
             </constraints>
             <properties/>
             <border type="line">
-              <color color="-6184543"/>
+              <color color="-12171706"/>
             </border>
             <children>
               <component id="48fe8" class="javax.swing.JLabel">
