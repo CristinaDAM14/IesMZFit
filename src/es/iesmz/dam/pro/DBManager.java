@@ -151,7 +151,7 @@ public class DBManager {
 
     }
 
-    // method that gets and ID and returns a resultset with the query results of that id
+    // method that gets an ID and returns a resultset with the query results of that id
     public static ResultSet getActivityST(int id) {
         try {
             // Realizamos la consulta SQL
@@ -173,7 +173,7 @@ public class DBManager {
         }
     }
 
-    // method that gets and ID and returns the Activity matching that ID
+    // method that gets an ID and returns the Activity matching that ID
     public static Activity getActivity(int id) {
         Activity activity = null;
         try {
@@ -196,7 +196,7 @@ public class DBManager {
         return activity;
     }
 
-    // Method that gets and ID and deletes the Activity matching that id
+    // Method that gets an ID and deletes the Activity matching that id
     public static boolean deleteActivity(int id) {
         try {
 
