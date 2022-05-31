@@ -1,14 +1,14 @@
 package es.iesmz.dam.pro;
 
 public class Activity {
-    int id;
-    String name;
-    int duration;
-    String schedule;
-    int turn;
-    int calories;
-    int capacity;
-    String difficulty;
+    private int id;
+    private String name;
+    private int duration;
+    private String schedule;
+    private int turn;
+    private int calories;
+    private int capacity;
+    private String difficulty;
 
     public Activity(int id, String name,int duration, String schedule, int turn, int calories, int capacity, String difficulty) {
         this.id = id;

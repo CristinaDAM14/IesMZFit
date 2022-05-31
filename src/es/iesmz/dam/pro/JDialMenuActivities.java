@@ -20,11 +20,23 @@ public class JDialMenuActivities extends JDialog {
         buttonSeeActivities.addActionListener(listenerSeeActivities());
         buttonAddActivities.addActionListener(listenerAddActivities());
         buttonDelActivities.addActionListener(listenerDelActivities());
+        buttonUpdtActivities.addActionListener(listenerUpdtActivities());
 
+    }
+
+    private ActionListener listenerUpdtActivities() {
+        return l-> {
+            JDialog updtActivities = new JDialUpdtActivities();
+            updtActivities.setSize(600, 500);
+            updtActivities.setVisible(true);
+        };
     }
 
     private ActionListener listenerDelActivities() {
         return l ->{
+            JDialog delActivities = new JDialDelActivities();
+            delActivities.setSize(400,300);
+            delActivities.setVisible(true);
         };
     }
 

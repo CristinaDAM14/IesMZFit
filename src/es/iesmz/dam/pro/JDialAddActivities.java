@@ -36,7 +36,14 @@ public class JDialAddActivities extends JDialog {
             String difficulty = textFieldDifficulty.getText();
             String name = textFieldName.getName();
             Activity activity = new Activity(name,duration,schedule,turn,calories,capacity,difficulty);
-            DBManager.addActivity(activity);
+            if(DBManager.addActivity(activity)){
+                JOptionPane.showMessageDialog(null,"The activity has been added correctly"
+                        ,"Adding Activities",JOptionPane.INFORMATION_MESSAGE);
+                this.dispose();
+            }else {
+                JOptionPane.showMessageDialog(null,"Something went wrong, impossible to add activity"
+                        ,"Error",JOptionPane.ERROR_MESSAGE);
+            }
         };
     }
 

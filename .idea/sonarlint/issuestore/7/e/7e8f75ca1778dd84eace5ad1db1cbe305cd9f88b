@@ -1,0 +1,34 @@
+
+C
+java:S1604#"(Make this anonymous inner class a lambda(ÏÑ›¬øÿÿÿÿ
+C
+java:S1604)"(Make this anonymous inner class a lambda(·°†×øÿÿÿÿ
+œ
+java:S11866"€Add a nested comment explaining why this method is empty, throw an UnsupportedOperationException or complete the implementation.(“ÙÓıÿÿÿÿ
+H
+java:S1068
+"-Remove this unused "txtNombre" private field.(…Í»ãıÿÿÿÿ
+E
+java:S1068"0Remove this unused "txtApellidos" private field.(Ğ³Ø
+E
+java:S1068"*Remove this unused "txtDNI" private field.(Æì×ıÿÿÿÿ
+J
+java:S1068"/Remove this unused "txtTelefono" private field.(Êç™Ïøÿÿÿÿ
+C
+java:S1068"-Remove this unused "txtCorreo" private field.(•Ö°ì
+L
+java:S1068"6Remove this unused "txtFechaNacimiento" private field.(“»Ÿœ
+C
+java:S1068"-Remove this unused "lblNombre" private field.(‹ÏŸ
+K
+java:S1068"0Remove this unused "lblApellidos" private field.(³¼àåøÿÿÿÿ
+@
+java:S1068"*Remove this unused "lblDNI" private field.(º–³ 
+J
+java:S1068"/Remove this unused "lblTelefono" private field.(¶ãÔìûÿÿÿÿ
+H
+java:S1068"-Remove this unused "lblCorreo" private field.(Ø«­øÿÿÿÿ
+Q
+java:S1068"6Remove this unused "lblFechaNacimiento" private field.(ºáÔøÿÿÿÿ
+G
+java:S1068"1Remove this unused "lblMetodoPago" private field.(®ıçä

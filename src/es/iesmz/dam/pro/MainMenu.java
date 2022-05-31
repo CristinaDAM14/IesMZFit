@@ -84,22 +84,23 @@ public class MainMenu extends JFrame {
 
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(()->{
-            JFrame mainMenu = new MainMenu();
-            mainMenu.setSize(300,400);
-            mainMenu.setVisible(true);
-            DBManager.loadDriver();
-            DBManager.connect();
+        if (DBManager.loadDriver() && DBManager.connect()) {
+            SwingUtilities.invokeLater(() -> {
+                JFrame mainMenu = new MainMenu();
+                mainMenu.setSize(300, 400);
+                mainMenu.setVisible(true);
 
-            // Method to close db connection when closing the window
-            mainMenu.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-            mainMenu.addWindowListener(new WindowAdapter() {
-                public void windowClosing(WindowEvent e) {
-                    DBManager.close();
-                    mainMenu.dispose();
-                    System.exit(0);
-                }
+
+                // Method to close db connection when closing the window
+                mainMenu.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+                mainMenu.addWindowListener(new WindowAdapter() {
+                    public void windowClosing(WindowEvent e) {
+                        DBManager.close();
+                        mainMenu.dispose();
+                        System.exit(0);
+                    }
+                });
             });
-        });
+        }
     }
 }

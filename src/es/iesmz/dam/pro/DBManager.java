@@ -139,7 +139,7 @@ public class DBManager {
             rs.updateString(DB_ACT_DIFICULAD, activity.getDifficulty());
             rs.insertRow();
 
-            // Todo bien, cerramos ResultSet y devolvemos true
+            // bien, cerramos ResultSet y devolvemos true
             rs.close();
             return true;
 
@@ -149,5 +149,102 @@ public class DBManager {
         }
 
 
+    }
+
+    // method that gets and ID and returns a resultset with the query results of that id
+    public static ResultSet getActivityST(int id) {
+        try {
+            // Realizamos la consulta SQL
+            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = DB_ACTIVIDADES_SELECT + " WHERE " + DB_ACT_ID + "='" + id + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            // Si no hay primer registro entonces no existe la actividad
+            if (!rs.first()) {
+                return null;
+            }
+
+            // si existe devolvemos el resulset con la actividad.
+            return rs;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    // method that gets and ID and returns the Activity matching that ID
+    public static Activity getActivity(int id) {
+        Activity activity = null;
+        try {
+            ResultSet rs = getActivityST(id);
+            if (rs == null){
+                return activity;
+            }
+            String nombre = rs.getString(DB_ACT_NOMBRE);
+            int duracion = rs.getInt(DB_ACT_DURACION);
+            String horario = rs.getString(DB_ACT_HORARIO);
+            int turno = rs.getInt(DB_ACT_TURNO);
+            int calorias = rs.getInt(DB_ACT_CALORIAS);
+            int aforo = rs.getInt(DB_ACT_AFORO);
+            String dificultad = rs.getString(DB_ACT_DIFICULAD);
+            activity = new Activity(id,nombre,duracion,horario,turno,calorias,aforo,dificultad);
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return activity;
+    }
+
+    // Method that gets and ID and deletes the Activity matching that id
+    public static boolean deleteActivity(int id) {
+        try {
+
+            // Obtenemos la actividad
+            ResultSet rs = getActivityST(id);
+
+            // Si existe y tiene primer registro, lo eliminamos
+            if (rs.first()) {
+                rs.deleteRow();
+                rs.close();
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public static boolean updateActivity(Activity activity) {
+        try {
+            // Obtenemos la actividad
+            ResultSet rs = getActivityST(activity.getId());
+
+            // Si no existe el Resultset
+            if (rs == null) {
+                return false;
+            }
+            // Si tiene un primer registro, lo actualizamos.
+            if (rs.first()) {
+                rs.updateString(DB_ACT_NOMBRE, activity.getName());
+                rs.updateInt(DB_ACT_DURACION, activity.getDuration());
+                rs.updateString(DB_ACT_HORARIO,activity.getSchedule());
+                rs.updateInt(DB_ACT_TURNO, activity.getTurn());
+                rs.updateInt(DB_ACT_CALORIAS, activity.getCalories());
+                rs.updateInt(DB_ACT_AFORO,activity.getCapacity());
+                rs.updateString(DB_ACT_DIFICULAD, activity.getDifficulty());
+                rs.updateRow();
+                rs.close();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
     }
 }
