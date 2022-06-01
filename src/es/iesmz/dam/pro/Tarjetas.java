@@ -9,30 +9,21 @@ public class Tarjetas extends JDialog {
     private JButton buttonCancel;
     private JPanel datosPanel;
     private JTextField NomText;
-    private JTextField ApellText;
-    private JTextField DNIText;
-    private JTextField IDText;
     private JLabel NomLabel;
-    private JLabel ApellLabel;
-    private JLabel DNILabel;
-    private JLabel IDLabel;
     private JPanel PanelPago;
-    private JComboBox Opciones;
     private JTextField TitularText;
     private JTextField TarjetaText;
     private JTextField CVVText;
     private JSpinner DataText;
-    private JButton pagarButton;
+    private JButton añadirButton;
     private JLabel ImagenLabel;
     private JLabel TarjetaLabel;
     private JLabel TitularLabel;
     private JLabel CVVLabel;
     private JLabel DataLabel;
-    private JPanel MetodoPanel;
-    private JButton CreditoButton;
-    private JButton paypalButton;
     private JPanel PanelBotton;
     private JPanel PanelDatos;
+    private JButton buscarButton;
 
     public Tarjetas() {
         setContentPane(PanelGeneral);
