@@ -1,6 +1,4 @@
 
-Z
-*src/es/iesmz/dam/pro/JDialMonitorMenu.form,c\e\cecdec13829ea4d0b651948e8c6415db512e9915
 X
 (src/es/iesmz/dam/pro/MostrarPersona.java,e\5\e5d207c4e69c0e6f81809fb11d72ec57044f14c0
 R
@@ -17,3 +15,28 @@ X
 (src/es/iesmz/dam/pro/JDialAdminMenu.form,1\b\1b06133997846f32adb0d8d5b4b80b5a7aa15f38
 W
 'src/es/iesmz/dam/pro/JDialUserMenu.form,7\8\782e5c9afcc154a0c246edf0dc615924abe3cb5c
+D
+Project_IESMZFIT.iml,d\d\dd14733d55dfd1495756975ff1b7e421dcf3cdaf
+]
+-src/es/iesmz/dam/pro/JDialMenuActivities.form,3\e\3e769c2c173ac2fa6436fe027e3f97420a72eb0b
+\
+,src/es/iesmz/dam/pro/JDialAddActivities.form,5\5\55ab6aaa7e0081e5b6b9289070fad5154444e5f3
+W
+'src/es/iesmz/dam/pro/JDialUserMenu.java,b\3\b3947c076fa187d91ca0249504a7fa8f87178781
+:
+
+.gitignore,a\5\a5cc2925ca8258af241be7e5b0381edf30266302
+\
+,src/es/iesmz/dam/pro/JDialDelActivities.form,4\0\4096153eba038a3a4a83e537ad9daaf7c4f1b5f8
+S
+#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+R
+"src/es/iesmz/dam/pro/Activity.java,a\e\ae195e520ae486c81794ca1c6463a90b02e40359
+\
+,src/es/iesmz/dam/pro/JDialAddActivities.java,f\b\fb383f818f915cd6efc0b591f250f6ccb79895fd
+\
+,src/es/iesmz/dam/pro/JDialDelActivities.java,9\8\9872dc3c7c60647f8ee17d7569f78e8ac8b911bd
+\
+,src/es/iesmz/dam/pro/JDialSeeActivities.java,a\4\a477914085de4628f2e874700d792ed2327dd686
+R
+"src/es/iesmz/dam/pro/MainMenu.java,c\c\cc5f0e499fa42b2bc60678421abeb923183e14cd

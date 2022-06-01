@@ -24,6 +24,9 @@ public class JDialAdminMenu extends JDialog {
 
     private ActionListener listenerMonitor() {
         return l ->{
+            JDialog menuMonitor = new JDialMenuMonitor();
+            menuMonitor.setSize(300,500);
+            menuMonitor.setVisible(true);
         };
     }
     private ActionListener listenerActivities() {
