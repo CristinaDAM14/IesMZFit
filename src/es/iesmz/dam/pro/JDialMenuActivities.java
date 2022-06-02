@@ -27,7 +27,7 @@ public class JDialMenuActivities extends JDialog {
     private ActionListener listenerUpdtActivities() {
         return l-> {
             JDialog updtActivities = new JDialUpdtActivities();
-            updtActivities.setSize(600, 500);
+            updtActivities.setSize(400, 300);
             updtActivities.setVisible(true);
         };
     }
