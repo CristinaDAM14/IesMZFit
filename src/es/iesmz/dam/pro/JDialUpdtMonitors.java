@@ -3,7 +3,6 @@ package es.iesmz.dam.pro;
 
 import javax.swing.*;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -19,12 +18,16 @@ public class JDialUpdtMonitors extends JDialog {
     private JTextField textFieldName;
     private JTextField textFieldLastName;
     private JTextField textFieldBirthDate;
-    private JTextField textFieldGender;
+    private JRadioButton radioButtonFemale;
+    private JRadioButton radioButtonMale;
 
     public JDialUpdtMonitors(){
         setContentPane(mainPanelUpdt);
         setModal(true);
         setTitle("Update Monitors");
+        ButtonGroup genderButtons = new ButtonGroup();
+        genderButtons.add(radioButtonFemale);
+        genderButtons.add(radioButtonMale);
         buttonExit.addActionListener(l ->dispose());
         buttonSearch.addActionListener(listenerSearch());
         buttonUpdate.addActionListener(listenerUpdate());
@@ -44,7 +47,7 @@ public class JDialUpdtMonitors extends JDialog {
                 int id = Integer.parseInt(textFieldID.getText());
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
                 LocalDate birth =LocalDate.parse(textFieldBirthDate.getText(),formatter);
-                String gender = textFieldGender.getText();
+                String gender = radioButtonFemale.isSelected()?"F":"M";
                 String name = textFieldName.getText();
                 String lastName = textFieldLastName.getText();
                 Monitor monitor = new Monitor(id,name,lastName, birth, gender);
@@ -84,7 +87,13 @@ public class JDialUpdtMonitors extends JDialog {
         textFieldName.setText(monitor.getName());
         textFieldLastName.setText(monitor.getLastName());
         textFieldBirthDate.setText(monitor.getBirthDate().toString());
-        textFieldGender.setText(monitor.getGender());
+        String gender = monitor.getGender();
+        if (gender.matches("F")){
+            radioButtonFemale.setSelected(true);
+        }
+        if (gender.matches("M")){
+            radioButtonMale.setSelected(true);
+        }
         dataPanel.setVisible(true);
         textFieldID.setEditable(false);
         this.setSize(400,600);

@@ -14,3 +14,4 @@
 .idea/sonarlint/issuestore/b/3/b3139a65657a4c61dc3dbe3c5713008e6267aff8
 .idea/sonarlint/issuestore/c/e/cecdec13829ea4d0b651948e8c6415db512e9915
 .idea/sonarlint/issuestore/d/6/d6a9ed905bd7eaa50b08e8179ad8fb66421cc9b0
+*.class

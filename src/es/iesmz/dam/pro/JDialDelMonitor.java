@@ -14,15 +14,19 @@ public class JDialDelMonitor extends JDialog {
     private JButton buttonSearch;
     private JTextField textFieldName;
     private JTextField textFieldLastName;
-    private JTextField textFieldBirth;
-    private JTextField textFieldGender;
+    private JRadioButton radioButtonFemale;
     private JTextField textFieldBirthDate;
+    private JRadioButton radioButtonMale;
+
 
 
     public JDialDelMonitor(){
         setContentPane(mainPanelDel);
         setModal(true);
-        setTitle("Delete Activities");
+        setTitle("Delete Monitors");
+        ButtonGroup genderButtons = new ButtonGroup();
+        genderButtons.add(radioButtonFemale);
+        genderButtons.add(radioButtonMale);
         buttonExit.addActionListener(l ->dispose());
         buttonSearch.addActionListener(listenerSearch());
         buttonDelete.addActionListener(listenerDelete());
@@ -75,8 +79,14 @@ public class JDialDelMonitor extends JDialog {
     private void poblateTextFields(Monitor monitor) {
         textFieldName.setText(monitor.getName());
         textFieldLastName.setText(monitor.getLastName());
-        textFieldBirth.setText(monitor.getBirthDate().toString());
-        textFieldGender.setText(monitor.getGender());
+        textFieldBirthDate.setText(monitor.getBirthDate().toString());
+        String gender = monitor.getGender();
+        if (gender.matches("F")){
+            radioButtonFemale.setSelected(true);
+        }
+        if (gender.matches("M")){
+            radioButtonMale.setSelected(true);
+        }
         dataPanel.setVisible(true);
         textFieldID.setEditable(false);
         this.setSize(400,600);

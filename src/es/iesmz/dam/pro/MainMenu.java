@@ -46,8 +46,8 @@ public class MainMenu extends JFrame {
                 int userLevel = DBManager.getLoginLvl(userName,userPassword);
                 switch (userLevel){
                     case 1 -> menuAdmin();
-                    case 2 -> menuMonitor();
-                    case 3 -> menuUser();
+                    //case 2 -> menuMonitor();
+                    case 3 -> menuUser(userName,userPassword);
                     default -> JOptionPane.showMessageDialog(null,"Username or Password not matching"
                             ,"Error: Login failed",JOptionPane.ERROR_MESSAGE);
                 }
@@ -56,17 +56,18 @@ public class MainMenu extends JFrame {
     }
 
 
-    private void menuUser() {
-        JDialog userMenu = new JDialUserMenu();
+    private void menuUser(String user, String password) {
+        JDialog userMenu = new JDialUserMenu(user, password);
         userMenu.setSize(300,300);
         userMenu.setVisible(true);
     }
-
+    /*
     private void menuMonitor() {
         JDialog monitorMenu = new JDialMonitorMenu();
         monitorMenu.setSize(300,300);
         monitorMenu.setVisible(true);
     }
+     */
 
     private void menuAdmin() {
         JDialog adminMenu = new JDialAdminMenu();

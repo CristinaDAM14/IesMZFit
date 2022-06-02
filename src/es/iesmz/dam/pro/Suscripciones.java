@@ -17,14 +17,14 @@ public class Suscripciones extends JDialog {
     private JRadioButton eligePlatinum;
     private JButton buttonCancel;
 
-    public Suscripciones() {
+    public Suscripciones(String user, String password) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                onOK(user,password);
             }
         });
 
@@ -44,7 +44,8 @@ public class Suscripciones extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
-    private void onOK() {
+    private void onOK(String user, String password) {
+
         // add your code here
         dispose();
     }
@@ -54,10 +55,4 @@ public class Suscripciones extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-        Suscripciones dialog = new Suscripciones();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
 }
