@@ -4,7 +4,7 @@ import javax.swing.*;
 import java.sql.*;
 
 public class DBManager {
-    private static Connection conn = null;
+    static Connection conn = null;
     private static final String DB_HOST = "127.0.0.1";
     private static final String DB_PORT = "3306";
     private static final String DB_NAME = "marcosfit";
@@ -48,6 +48,7 @@ public class DBManager {
     public static boolean connect() {
         try {
             conn = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            System.out.println("OK!");
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -103,6 +104,29 @@ public class DBManager {
 
     }
 
+    public static ResultSet getTarjetas(String id) {
+        try {
+            // Realizamos la consulta SQL
+            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = DB_TARJETAS_SELECT + " WHERE " + DB_TARJETAS_NOM + "='" + id + "';";
+            //System.out.println(sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            //stmt.close();
+
+            // Si no hay primer registro entonces no existe la tarjeta
+            if (!rs.first()) {
+                return null;
+            }
+
+            // Todo bien, devolvemos la tarjeta
+            return rs;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
     public static boolean insertTarjeta(String numero, String CVV, String nombre, String caducidad, String tipo) {
         try {
             // Obtenemos la tabla tarjetas
@@ -128,4 +152,6 @@ public class DBManager {
             return false;
         }
     }
+
+
 }
