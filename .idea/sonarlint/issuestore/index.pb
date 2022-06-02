@@ -35,8 +35,12 @@ R
 \
 ,src/es/iesmz/dam/pro/JDialAddActivities.java,f\b\fb383f818f915cd6efc0b591f250f6ccb79895fd
 \
-,src/es/iesmz/dam/pro/JDialDelActivities.java,9\8\9872dc3c7c60647f8ee17d7569f78e8ac8b911bd
-\
 ,src/es/iesmz/dam/pro/JDialSeeActivities.java,a\4\a477914085de4628f2e874700d792ed2327dd686
 R
 "src/es/iesmz/dam/pro/MainMenu.java,c\c\cc5f0e499fa42b2bc60678421abeb923183e14cd
+]
+-src/es/iesmz/dam/pro/JDialUpdtActivities.java,9\9\99ccb8f4ca0e82595e5136ba8e734698c6a09461
+]
+-src/es/iesmz/dam/pro/JDialUpdtActivities.form,6\6\663c956b4ac29c464a1c3257d67cd3876128eeb6
+]
+-src/es/iesmz/dam/pro/JDialMenuActivities.java,a\5\a5b4673472d867d8dc50e4e66e51dc0d22cb2726

@@ -26,17 +26,17 @@ public class JDialMenuMonitor extends JDialog {
 
     private ActionListener listenerUpdtMonitors() {
         return l-> {
-            JDialog updtActivities = new JDialUpdtActivities();
-            updtActivities.setSize(400, 300);
-            updtActivities.setVisible(true);
+            JDialog updtMonitors = new JDialUpdtActivities();
+            updtMonitors.setSize(400, 300);
+            updtMonitors.setVisible(true);
         };
     }
 
     private ActionListener listenerDelMonitors() {
         return l ->{
-            JDialog delActivities = new JDialDelActivities();
-            delActivities.setSize(400,300);
-            delActivities.setVisible(true);
+            JDialog delMonitors = new JDialDelActivities();
+            delMonitors.setSize(400,300);
+            delMonitors.setVisible(true);
         };
     }
 
