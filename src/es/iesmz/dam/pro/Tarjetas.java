@@ -15,7 +15,7 @@ public class Tarjetas extends JDialog {
     private JTextField TarjetaText;
     private JTextField CVVText;
     private JSpinner DataText;
-    private JButton añadirButton;
+    private JButton anyadirB;
     private JLabel ImagenLabel;
     private JLabel TarjetaLabel;
     private JLabel TitularLabel;
@@ -24,6 +24,8 @@ public class Tarjetas extends JDialog {
     private JPanel PanelBotton;
     private JPanel PanelDatos;
     private JButton buscarButton;
+    private JTextField TipoText;
+    private JLabel TipoLabel;
 
     public Tarjetas() {
         setContentPane(PanelGeneral);
@@ -58,6 +60,17 @@ public class Tarjetas extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         ImagenLabel.setIcon(new ImageIcon("img\\PagosTarjeta.PNG"));
+
+        DBManager.loadDriver();
+        DBManager.connect();
+
+
+       /* anyadirB.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                DBManager.insertTarjeta(TarjetaText.getText(),CVVText.getText(),TitularText.getText(),DataText.getName(),TipoText.getText());
+            }
+        });*/
     }
 
     private void onOK() {

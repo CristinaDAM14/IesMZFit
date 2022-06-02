@@ -1,5 +1,6 @@
 package es.iesmz.dam.pro;
 
+import javax.swing.*;
 import java.sql.*;
 
 public class DBManager {
@@ -19,6 +20,15 @@ public class DBManager {
     private static final String DB_LOGIN_PSWD = "Password";
     private static final String DB_LOGIN_USRLVL = "UserLevel";
 
+    // Configuracion tarjetas
+    private static final String DB_TARJETAS = "Tarjetas";
+    private static final String DB_TARJETAS_SELECT = "Select * from "+ DB_TARJETAS;
+    private static final String DB_TARJETAS_NUM = "numero";
+    private static final String DB_TARJETAS_CVV = "CVV";
+    private static final String DB_TARJETAS_NOM = "nombre_titular";
+    private static final String DB_TARJETAS_CAD = "caducidad";
+    private static final String DB_TARJETAS_TIPO = "tipo";
+
 
 
 
@@ -26,6 +36,7 @@ public class DBManager {
     public static boolean loadDriver() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
+            System.out.println("OK!");
             return true;
         } catch (Exception ex) {
             ex.printStackTrace();
@@ -75,6 +86,46 @@ public class DBManager {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return -1;
+        }
+    }
+
+    //BASE DE DATOS DE TARJETAS
+    public static ResultSet getTablaTarjetas(int resultSetType, int resultSetConcurrency) {
+        try {
+            Statement stmt = conn.createStatement(resultSetType, resultSetConcurrency);
+            ResultSet rs = stmt.executeQuery(DB_TARJETAS_SELECT);
+            //stmt.close();
+            return rs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static boolean insertTarjeta(String numero, String CVV, String nombre, String caducidad, String tipo) {
+        try {
+            // Obtenemos la tabla tarjetas
+            System.out.print("Insertando tarjeta de " + nombre + "...");
+            ResultSet rs = getTablaTarjetas(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+
+            // Insertamos el nuevo registro
+            rs.moveToInsertRow();
+            rs.updateString(DB_TARJETAS_NUM, numero);
+            rs.updateString(DB_TARJETAS_CVV, CVV);
+            rs.updateString(DB_TARJETAS_NOM, nombre);
+            rs.updateString(DB_TARJETAS_CAD, caducidad);
+            rs.updateString(DB_TARJETAS_TIPO, tipo);
+            rs.insertRow();
+
+            // Todo bien, cerramos ResultSet y devolvemos true
+            rs.close();
+            System.out.println("¡Tarjeta guardada!");
+
+            return true;
+
+        } catch (SQLException ex) {
+            return false;
         }
     }
 }
