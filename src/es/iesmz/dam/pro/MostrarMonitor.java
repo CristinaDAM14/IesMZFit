@@ -49,9 +49,4 @@ public class MostrarMonitor extends JDialog {
 
     }
 
-    public static void main(String[] args) {
-        MostrarMonitor dialog = new MostrarMonitor();
-        dialog.setSize(600,400);
-        dialog.setVisible(true);
-    }
 }
