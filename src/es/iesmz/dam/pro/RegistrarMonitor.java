@@ -16,6 +16,10 @@ public class RegistrarMonitor extends JDialog {
     private JTextField txtApellidos;
     private JLabel lblFechaNacimiento;
     private JTextField txtFechaNacimiento;
+    private JLabel lblEspecialidad;
+    private JTextField txtEspecialidad;
+    private JLabel lblFechaInicio;
+    private JTextField txtFechaInicio;
     private JLabel lblGenero;
     private JRadioButton rbtnHombre;
     private JRadioButton rbtnMujer;
@@ -74,8 +78,6 @@ public class RegistrarMonitor extends JDialog {
     }
 
     public static void main(String[] args) {
-        DBManager.loadDriver();
-        DBManager.connect();
         RegistrarMonitor dialog = new RegistrarMonitor();
         dialog.setSize(600,400);
         dialog.setVisible(true);
