@@ -1,6 +1,7 @@
 package es.iesmz.dam.pro;
 
 import java.sql.*;
+import java.time.LocalDate;
 
 public class DBManager {
     private static Connection conn = null;
@@ -18,6 +19,27 @@ public class DBManager {
     private static final String DB_LOGIN_USR = "Username";
     private static final String DB_LOGIN_PSWD = "Password";
     private static final String DB_LOGIN_USRLVL = "UserLevel";
+
+    // Conf for Monitors
+    private static final String DB_MONITORES = "monitores";
+    private static final String DB_MONITOR_SELECT = "Select * from "+ DB_MONITORES;
+    private static final String DB_MONITOR_CODIGO ="codigo_monitores";
+    private static final String DB_MONITOR_NOMBRE ="Nombre";
+    private static final String DB_MONITOR_APELLIDOS ="apellidos";
+    private static final String DB_MONITOR_NACIMIENTO ="Fecha_nac";
+    private static final String DB_MONITOR_GENERO ="Genero";
+
+    // Conf for Users
+    private static final String DB_USUARIOS = "usuarios";
+    private static final String DB_USUARIOS_SELECT = "Select * from "+ DB_USUARIOS;
+    private static final String DB_USUARIOS_CODIGO ="codigo_usuarios";
+    private static final String DB_USUARIOS_DNI ="DNI";
+    private static final String DB_USUARIOS_NOMBRE ="nombre";
+    private static final String DB_USUARIOS_APELLIDOS ="apellidos";
+    private static final String DB_USUARIOS_TELEFONO ="telefono";
+    private static final String DB_USUARIOS_METODOPAGO ="metodo_pago";
+    private static final String DB_USUARIOS_CORREO ="correo";
+    private static final String DB_USUARIOS_CODIGOSUSCRIPCION ="codigo_suscripcion";
 
 
 
@@ -77,4 +99,103 @@ public class DBManager {
             return -1;
         }
     }
+
+    // Metodo insertar monitor
+
+    public static ResultSet getTablaMonitores(int resultSetType, int resultSetConcurrency) {
+        try {
+            Statement stmt = conn.createStatement(resultSetType, resultSetConcurrency);
+            ResultSet rs = stmt.executeQuery(DB_MONITOR_SELECT);
+            //stmt.close();
+            return rs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static boolean insertMonitor(String nombre, String apellidos, LocalDate fechaNacimiento, String genero){
+
+        try {
+            // Obtenemos la tabla monitores
+            System.out.print("Insertando monitor " + nombre + "...");
+            ResultSet rs = getTablaMonitores(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            Statement smtm = conn.createStatement();
+            ResultSet rst = smtm.executeQuery("SELECT MAX(codigo_monitores) FROM monitores");
+
+
+            rs.moveToInsertRow();
+            if (rst.next()){
+                int codigo = (rst.getInt(1)+1);
+                rs.updateInt(DB_MONITOR_CODIGO, codigo);
+            }
+            rs.updateString(DB_MONITOR_NOMBRE, nombre);
+            rs.updateString(DB_MONITOR_APELLIDOS, apellidos);
+            rs.updateDate(DB_MONITOR_NACIMIENTO, Date.valueOf(fechaNacimiento));
+            rs.updateString(DB_MONITOR_GENERO, genero);
+            rs.insertRow();
+
+            // Todo bien, cerramos ResultSet y devolvemos true
+            rs.close();
+            rst.close();
+            System.out.println("OK!");
+            return true;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
+    public static ResultSet getTablaUsuarios(int resultSetType, int resultSetConcurrency) {
+        try {
+            Statement stmt = conn.createStatement(resultSetType, resultSetConcurrency);
+            ResultSet rs = stmt.executeQuery(DB_USUARIOS_SELECT);
+            //stmt.close();
+            return rs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static boolean insertUsuario(String dni, String nombre, String apellidos, String telefono, String correo, String metodo){
+
+        try {
+            // Obtenemos la tabla usuarios
+            System.out.print("Insertando usuario " + nombre + "...");
+            ResultSet rs = getTablaUsuarios(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            Statement smtm = conn.createStatement();
+            ResultSet rst = smtm.executeQuery("SELECT MAX(codigo_usuarios) FROM usuarios");
+
+            rs.moveToInsertRow();
+            if (rst.next()){
+                int codigo = (rst.getInt(1)+1);
+                rs.updateInt(DB_USUARIOS_CODIGO, codigo);
+            }
+            rs.updateString(DB_USUARIOS_DNI, dni);
+            rs.updateString(DB_USUARIOS_NOMBRE, nombre);
+            rs.updateString(DB_USUARIOS_APELLIDOS, apellidos);
+            rs.updateString(DB_USUARIOS_TELEFONO, telefono);
+            rs.updateString(DB_USUARIOS_CORREO, correo);
+            rs.updateString(DB_USUARIOS_METODOPAGO, metodo);
+            rs.updateInt(DB_USUARIOS_CODIGOSUSCRIPCION, 210);
+            rs.insertRow();
+
+            // Todo bien, cerramos ResultSet y devolvemos true
+            rs.close();
+            System.out.println("OK!");
+            return true;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
+    }
+
+
 }
