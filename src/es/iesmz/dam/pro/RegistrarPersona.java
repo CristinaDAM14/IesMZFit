@@ -61,8 +61,10 @@ public class RegistrarPersona extends JDialog {
         if (rbtnEfectivo.isSelected()) {
             metodo="Efectivo";
         }
+        int randSubID = (int) (1 + Math.random() * (100));
+        User user = new User(txtDNI.getText(), txtNombre.getText(), txtApellidos.getText(), txtTelefono.getText(), txtCorreo.getText(), metodo,randSubID);
 
-        if (DBManager.insertUsuario(txtDNI.getText(), txtNombre.getText(), txtApellidos.getText(), txtTelefono.getText(), txtCorreo.getText(), metodo)){
+        if (DBManager.insertUsuario(user)){
 
             JOptionPane.showMessageDialog(null, "Se a guardado correctamente");
 
@@ -73,13 +75,6 @@ public class RegistrarPersona extends JDialog {
 
     }
 
-    public static void main(String[] args) {
-        DBManager.loadDriver();
-        DBManager.connect();
-        RegistrarPersona dialog = new RegistrarPersona();
-        dialog.setSize(600,400);
-        dialog.setVisible(true);
-    }
 
 
 }

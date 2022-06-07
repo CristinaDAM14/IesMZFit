@@ -229,14 +229,33 @@ public class DBManager {
             ex.printStackTrace();
             return null;
         }
-
+    }
+    public static List<User> getUsersList(){
+        List<User> users = new ArrayList<>();
+        try {
+            ResultSet rs = getTablaMonitores(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            while (rs.next()) {
+                int id = rs.getInt(DB_USUARIOS_CODIGO);
+                String dni = rs.getString(DB_USUARIOS_DNI);
+                String name = rs.getString(DB_USUARIOS_NOMBRE);
+                String lastName = rs.getString(DB_USUARIOS_APELLIDOS);
+                String phone =rs.getString(DB_USUARIOS_TELEFONO);
+                String email = rs.getString(DB_USUARIOS_CORREO);
+                String paymentMethod = rs.getString(DB_USUARIOS_METODOPAGO);
+                int subID = rs.getInt(DB_USUARIOS_CODIGOSUSCRIPCION);
+                users.add(new User(id,dni,name,lastName,phone,email,paymentMethod,subID));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 
-    public static boolean insertUsuario(String dni, String nombre, String apellidos, String telefono, String correo, String metodo){
+    public static boolean insertUsuario(User user){
 
         try {
             // Obtenemos la tabla usuarios
-            System.out.print("Insertando usuario " + nombre + "...");
             ResultSet rs = getTablaUsuarios(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
             Statement smtm = conn.createStatement();
             ResultSet rst = smtm.executeQuery("SELECT MAX(codigo_usuarios) FROM usuarios");
@@ -246,12 +265,12 @@ public class DBManager {
                 int codigo = (rst.getInt(1)+1);
                 rs.updateInt(DB_USUARIOS_CODIGO, codigo);
             }
-            rs.updateString(DB_USUARIOS_DNI, dni);
-            rs.updateString(DB_USUARIOS_NOMBRE, nombre);
-            rs.updateString(DB_USUARIOS_APELLIDOS, apellidos);
-            rs.updateString(DB_USUARIOS_TELEFONO, telefono);
-            rs.updateString(DB_USUARIOS_CORREO, correo);
-            rs.updateString(DB_USUARIOS_METODOPAGO, metodo);
+            rs.updateString(DB_USUARIOS_DNI, user.getDni());
+            rs.updateString(DB_USUARIOS_NOMBRE, user.getName());
+            rs.updateString(DB_USUARIOS_APELLIDOS, user.getLastName());
+            rs.updateString(DB_USUARIOS_TELEFONO, user.getPhone());
+            rs.updateString(DB_USUARIOS_CORREO, user.getEmail());
+            rs.updateString(DB_USUARIOS_METODOPAGO, user.getPaymentMethod());
             rs.updateInt(DB_USUARIOS_CODIGOSUSCRIPCION, 210);
             rs.insertRow();
 

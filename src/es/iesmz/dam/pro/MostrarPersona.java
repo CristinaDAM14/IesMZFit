@@ -1,59 +1,46 @@
 package es.iesmz.dam.pro;
 
 import javax.swing.*;
-import java.awt.event.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 public class MostrarPersona extends JDialog {
-    private JPanel panelPrincipal;
-    private JButton btnEliminar;
-    private JLabel lblNombre;
-    private JTextField txtNombre;
-    private JLabel lblApellidos;
-    private JTextField txtApellidos;
-    private JLabel lblDNI;
-    private JTextField txtDNI;
-    private JLabel lblTelefono;
-    private JTextField txtTelefono;
-    private JLabel lblCorreo;
-    private JTextField txtCorreo;
-    private JLabel lblFechaNacimiento;
-    private JTextField txtFechaNacimiento;
-    private JLabel lblMetodoPago;
-    private JRadioButton rbtnEfectivo;
-    private JRadioButton rbtnTarjeta;
-    private JLabel lblDNIBuscar;
-    private JTextField txtBuscarDNI;
-    private JButton btnBuscar;
+    private JPanel seeUsersPanel;
+    private JScrollPane usersScrollPanel;
+    private JTable tableMonitors;
+    private JButton buttonExit;
 
     public MostrarPersona() {
-        setContentPane(panelPrincipal);
+        setContentPane(seeUsersPanel);
         setModal(true);
-
-        btnEliminar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onEliminar();
-            }
-        });
-
-        btnBuscar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onBuscar();
-            }
-        });
-
+        buttonExit.setText("Exit");
+        buttonExit.addActionListener(l -> dispose());
+        createTable();
     }
+    public void createTable(){
+        String id = "ID";
+        String dni = "DNI";
+        String name = "NAME";
+        String lastName= "LAST NAME";
+        String phone= "PHONE";
+        String email= "E-MAIL";
+        String paymentMethod= "PAYMENT METHOD";
+        String subscriptionID= "SUBSCRIPTION ID";
+        Object[] tableNames = {id, dni, name, lastName, phone, email, paymentMethod, subscriptionID};
+        List<User> users = DBManager.getUsersList();
+        Object[][] datosTabla = new Object[users.size()][tableNames.length];
 
-    private void onEliminar() {
-
-        dispose();
-    }
-
-    private void onBuscar() {
-        String dni = txtBuscarDNI.getText();
-        if (dni.matches("[0-9]{8}[a-zA-Z]")){
-
+        for (int i = 0; i < users.size(); i++) {
+            datosTabla[i][0] = users.get(i).getId();
+            datosTabla[i][1] = users.get(i).getName();
+            datosTabla[i][2] = users.get(i).getLastName();
+            datosTabla[i][3] = users.get(i).getPhone();
+            datosTabla[i][4] = users.get(i).getEmail();
+            datosTabla[i][5] = users.get(i).getPaymentMethod();
+            datosTabla[i][6] = users.get(i).getSubscriptionID();
         }
-
+        tableMonitors.setModel(new DefaultTableModel(datosTabla,tableNames));
+        tableMonitors.setVisible(true);
     }
 
 }
