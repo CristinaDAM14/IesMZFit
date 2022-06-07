@@ -51,7 +51,7 @@ public class JDialUpdtMonitors extends JDialog {
                 String name = textFieldName.getText();
                 String lastName = textFieldLastName.getText();
                 Monitor monitor = new Monitor(id,name,lastName, birth, gender);
-                /*
+
                 if (DBManager.updateMonitor(monitor)) {
                     JOptionPane.showMessageDialog(null, "Monitor successfully updated", "Updated", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
@@ -60,7 +60,7 @@ public class JDialUpdtMonitors extends JDialog {
                             , "Error updating", JOptionPane.ERROR_MESSAGE);
                 }
 
-                 */
+
             }
         };
     }
@@ -68,9 +68,8 @@ public class JDialUpdtMonitors extends JDialog {
     private ActionListener listenerSearch() {
         return l->{
             try {
-                int id = Integer.parseInt(textFieldID.getText());
-                Monitor monitor = null;
-                //Monitor monitor = DBManager.getMonitor(id);
+                int id = Integer.parseInt(textFieldID.getText());;
+                Monitor monitor = DBManager.getMonitor(id);
                 if (monitor != null) {
                     poblateTextFields(monitor);
                 }else {

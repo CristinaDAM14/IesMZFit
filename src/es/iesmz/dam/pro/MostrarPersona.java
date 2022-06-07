@@ -49,6 +49,10 @@ public class MostrarPersona extends JDialog {
     }
 
     private void onBuscar() {
+        String dni = txtBuscarDNI.getText();
+        if (dni.matches("[0-9]{8}[a-zA-Z]")){
+
+        }
 
     }
 

@@ -42,7 +42,7 @@ public class JDialDelMonitor extends JDialog {
                     , JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null
                     , options, null);
             // Si pulsa si, intentamos eliminarlo, en caso de que no exista saldra un mensaje diciendo que no existe.
-            /*
+
             if (resp == JOptionPane.YES_OPTION) {
                 int id = Integer.parseInt(textFieldID.getText());
                 if (DBManager.deleteMonitor(id)) {
@@ -53,8 +53,6 @@ public class JDialDelMonitor extends JDialog {
                             , "Error deleting", JOptionPane.ERROR_MESSAGE);
                 }
             }
-
-             */
         };
     }
 
@@ -62,8 +60,7 @@ public class JDialDelMonitor extends JDialog {
         return l->{
             try {
                 int id = Integer.parseInt(textFieldID.getText());
-                Monitor monitor = null;
-                //Monitor monitor = DBManager.getMonitor(id);
+                Monitor monitor = DBManager.getMonitor(id);
                 if (monitor != null) {
                     poblateTextFields(monitor);
                 }else {

@@ -1,52 +1,41 @@
 package es.iesmz.dam.pro;
 
 import javax.swing.*;
-import java.awt.event.*;
+import javax.swing.table.DefaultTableModel;
+import java.util.List;
 
 public class MostrarMonitor extends JDialog {
-    private JPanel panelPrincipal;
-    private JButton btnEliminar;
-    private JLabel lblNombre;
-    private JTextField txtNombre;
-    private JLabel lblApellidos;
-    private JTextField txtApellidos;
-    private JLabel lblFechaNacimiento;
-    private JTextField txtFechaNacimiento;
-    private JLabel lblEspecialidad;
-    private JTextField txtEspecialidad;
-    private JLabel lblFechaInicio;
-    private JTextField txtFechaInicio;
-    private JLabel lblGenero;
-    private JRadioButton rbtnHombre;
-    private JRadioButton rbtnMujer;
-    private JLabel lblIDBuscar;
-    private JTextField txtIDBuscar;
-    private JButton btnBuscar;
+    private JPanel seeMonitorsPanel;
+    private JScrollPane monitorsScrollPanel;
+    private JTable tableMonitors;
+    private JButton buttonExit;
 
     public MostrarMonitor() {
-        setContentPane(panelPrincipal);
+        setContentPane(seeMonitorsPanel);
         setModal(true);
-
-        btnBuscar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onBuscar();
-            }
-        });
-
-        btnEliminar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onEliminar();
-            }
-        });
+        buttonExit.setText("Exit");
+        buttonExit.addActionListener(l -> dispose());
+        createTable();
     }
+    public void createTable(){
+        String id = "ID";
+        String name = "NAME";
+        String lastName = "LAST NAME";
+        String birthDate = "BIRTH DATE";
+        String gender = "GENDER";
+        Object[] tableNames = {id,name,lastName,birthDate,gender};
+        List<Monitor> monitors = DBManager.getMonitorsList();
+        Object[][] datosTabla = new Object[monitors.size()][tableNames.length];
 
-    private void onEliminar() {
-
-
-    }
-
-    private void onBuscar() {
-
+        for (int i = 0; i < monitors.size(); i++) {
+            datosTabla[i][0] = monitors.get(i).getId();
+            datosTabla[i][1] = monitors.get(i).getName();
+            datosTabla[i][2] = monitors.get(i).getLastName();
+            datosTabla[i][3] = monitors.get(i).getBirthDate();
+            datosTabla[i][4] = monitors.get(i).getGender();
+        }
+        tableMonitors.setModel(new DefaultTableModel(datosTabla,tableNames));
+        tableMonitors.setVisible(true);
     }
 
 }

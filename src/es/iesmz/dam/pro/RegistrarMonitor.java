@@ -65,8 +65,9 @@ public class RegistrarMonitor extends JDialog {
         if (rbtnMujer.isSelected()) {
             gene="M";
         }
+        Monitor monitor = new Monitor(txtNombre.getText(),txtApellidos.getText(),fechaNac, gene);
 
-        if (DBManager.insertMonitor(txtNombre.getText(), txtApellidos.getText(), fechaNac, gene)){
+        if (DBManager.insertMonitor(monitor)){
 
             JOptionPane.showMessageDialog(null, "Se a guardado correctamente");
 
@@ -77,9 +78,4 @@ public class RegistrarMonitor extends JDialog {
 
     }
 
-    public static void main(String[] args) {
-        RegistrarMonitor dialog = new RegistrarMonitor();
-        dialog.setSize(600,400);
-        dialog.setVisible(true);
-    }
 }
