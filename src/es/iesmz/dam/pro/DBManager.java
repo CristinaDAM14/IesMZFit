@@ -1,8 +1,7 @@
 package es.iesmz.dam.pro;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDate;
 
 public class DBManager {
     private static Connection conn = null;
@@ -21,17 +20,26 @@ public class DBManager {
     private static final String DB_LOGIN_PSWD = "Password";
     private static final String DB_LOGIN_USRLVL = "UserLevel";
 
-    // Conf for Activities
-    private static final String DB_ACTIVIDADES = "Actividades";
-    private static final String DB_ACTIVIDADES_SELECT = "Select * from "+ DB_ACTIVIDADES;
-    private static final String DB_ACT_ID = "codigo_actividades";
-    private static final String DB_ACT_NOMBRE = "nombre";
-    private static final String DB_ACT_DURACION = "duracion";
-    private static final String DB_ACT_HORARIO = "horario";
-    private static final String DB_ACT_TURNO = "turno";
-    private static final String DB_ACT_CALORIAS = "cant_calorias";
-    private static final String DB_ACT_AFORO = "aforo";
-    private static final String DB_ACT_DIFICULAD = "dificultad";
+    // Conf for Monitors
+    private static final String DB_MONITORES = "monitores";
+    private static final String DB_MONITOR_SELECT = "Select * from "+ DB_MONITORES;
+    private static final String DB_MONITOR_CODIGO ="codigo_monitores";
+    private static final String DB_MONITOR_NOMBRE ="Nombre";
+    private static final String DB_MONITOR_APELLIDOS ="apellidos";
+    private static final String DB_MONITOR_NACIMIENTO ="Fecha_nac";
+    private static final String DB_MONITOR_GENERO ="Genero";
+
+    // Conf for Users
+    private static final String DB_USUARIOS = "usuarios";
+    private static final String DB_USUARIOS_SELECT = "Select * from "+ DB_USUARIOS;
+    private static final String DB_USUARIOS_CODIGO ="codigo_usuarios";
+    private static final String DB_USUARIOS_DNI ="DNI";
+    private static final String DB_USUARIOS_NOMBRE ="nombre";
+    private static final String DB_USUARIOS_APELLIDOS ="apellidos";
+    private static final String DB_USUARIOS_TELEFONO ="telefono";
+    private static final String DB_USUARIOS_METODOPAGO ="metodo_pago";
+    private static final String DB_USUARIOS_CORREO ="correo";
+    private static final String DB_USUARIOS_CODIGOSUSCRIPCION ="codigo_suscripcion";
 
 
 
@@ -91,56 +99,47 @@ public class DBManager {
             return -1;
         }
     }
-    public static ResultSet getActivities(int resultSetType, int resultSetConcurrency) {
+
+    // Metodo insertar monitor
+
+    public static ResultSet getTablaMonitores(int resultSetType, int resultSetConcurrency) {
         try {
             Statement stmt = conn.createStatement(resultSetType, resultSetConcurrency);
-            return stmt.executeQuery(DB_ACTIVIDADES_SELECT);
+            ResultSet rs = stmt.executeQuery(DB_MONITOR_SELECT);
+            //stmt.close();
+            return rs;
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
+
     }
 
-    public static List<Activity> getActivitiesList(){
-        List<Activity> activities = new ArrayList<>();
-        try {
-            ResultSet rs = getActivities(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-            while (rs.next()) {
-                int id = rs.getInt(DB_ACT_ID);
-                String nombre = rs.getString(DB_ACT_NOMBRE);
-                int duracion = rs.getInt(DB_ACT_DURACION);
-                String horario = rs.getString(DB_ACT_HORARIO);
-                int turno = rs.getInt(DB_ACT_TURNO);
-                int calorias = rs.getInt(DB_ACT_CALORIAS);
-                int aforo = rs.getInt(DB_ACT_AFORO);
-                String dificultad = rs.getString(DB_ACT_DIFICULAD);
-                activities.add(new Activity(id,nombre,duracion,horario,turno,calorias,aforo,dificultad));
-            }
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return activities;
-    }
+    public static boolean insertMonitor(String nombre, String apellidos, LocalDate fechaNacimiento, String genero){
 
-    public static boolean addActivity(Activity activity) {
         try {
-            // Obtenemos la tabla
-            ResultSet rs = getActivities(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            // Obtenemos la tabla monitores
+            System.out.print("Insertando monitor " + nombre + "...");
+            ResultSet rs = getTablaMonitores(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            Statement smtm = conn.createStatement();
+            ResultSet rst = smtm.executeQuery("SELECT MAX(codigo_monitores) FROM monitores");
 
-            // Insertamos el nuevo registro
+
             rs.moveToInsertRow();
-            rs.updateString(DB_ACT_NOMBRE, activity.getName());
-            rs.updateInt(DB_ACT_DURACION, activity.getDuration());
-            rs.updateString(DB_ACT_HORARIO,activity.getSchedule());
-            rs.updateInt(DB_ACT_TURNO, activity.getTurn());
-            rs.updateInt(DB_ACT_CALORIAS, activity.getCalories());
-            rs.updateInt(DB_ACT_AFORO,activity.getCapacity());
-            rs.updateString(DB_ACT_DIFICULAD, activity.getDifficulty());
+            if (rst.next()){
+                int codigo = (rst.getInt(1)+1);
+                rs.updateInt(DB_MONITOR_CODIGO, codigo);
+            }
+            rs.updateString(DB_MONITOR_NOMBRE, nombre);
+            rs.updateString(DB_MONITOR_APELLIDOS, apellidos);
+            rs.updateDate(DB_MONITOR_NACIMIENTO, Date.valueOf(fechaNacimiento));
+            rs.updateString(DB_MONITOR_GENERO, genero);
             rs.insertRow();
 
-            // bien, cerramos ResultSet y devolvemos true
+            // Todo bien, cerramos ResultSet y devolvemos true
             rs.close();
+            rst.close();
+            System.out.println("OK!");
             return true;
 
         } catch (SQLException ex) {
@@ -148,103 +147,55 @@ public class DBManager {
             return false;
         }
 
-
     }
 
-    // method that gets an ID and returns a resultset with the query results of that id
-    public static ResultSet getActivityST(int id) {
+    public static ResultSet getTablaUsuarios(int resultSetType, int resultSetConcurrency) {
         try {
-            // Realizamos la consulta SQL
-            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = DB_ACTIVIDADES_SELECT + " WHERE " + DB_ACT_ID + "='" + id + "';";
-            ResultSet rs = stmt.executeQuery(sql);
-
-            // Si no hay primer registro entonces no existe la actividad
-            if (!rs.first()) {
-                return null;
-            }
-
-            // si existe devolvemos el resulset con la actividad.
+            Statement stmt = conn.createStatement(resultSetType, resultSetConcurrency);
+            ResultSet rs = stmt.executeQuery(DB_USUARIOS_SELECT);
+            //stmt.close();
             return rs;
-
         } catch (SQLException ex) {
             ex.printStackTrace();
             return null;
         }
+
     }
 
-    // method that gets an ID and returns the Activity matching that ID
-    public static Activity getActivity(int id) {
-        Activity activity = null;
+    public static boolean insertUsuario(String dni, String nombre, String apellidos, String telefono, String correo, String metodo){
+
         try {
-            ResultSet rs = getActivityST(id);
-            if (rs == null){
-                return activity;
+            // Obtenemos la tabla usuarios
+            System.out.print("Insertando usuario " + nombre + "...");
+            ResultSet rs = getTablaUsuarios(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            Statement smtm = conn.createStatement();
+            ResultSet rst = smtm.executeQuery("SELECT MAX(codigo_usuarios) FROM usuarios");
+
+            rs.moveToInsertRow();
+            if (rst.next()){
+                int codigo = (rst.getInt(1)+1);
+                rs.updateInt(DB_USUARIOS_CODIGO, codigo);
             }
-            String nombre = rs.getString(DB_ACT_NOMBRE);
-            int duracion = rs.getInt(DB_ACT_DURACION);
-            String horario = rs.getString(DB_ACT_HORARIO);
-            int turno = rs.getInt(DB_ACT_TURNO);
-            int calorias = rs.getInt(DB_ACT_CALORIAS);
-            int aforo = rs.getInt(DB_ACT_AFORO);
-            String dificultad = rs.getString(DB_ACT_DIFICULAD);
-            activity = new Activity(id,nombre,duracion,horario,turno,calorias,aforo,dificultad);
+            rs.updateString(DB_USUARIOS_DNI, dni);
+            rs.updateString(DB_USUARIOS_NOMBRE, nombre);
+            rs.updateString(DB_USUARIOS_APELLIDOS, apellidos);
+            rs.updateString(DB_USUARIOS_TELEFONO, telefono);
+            rs.updateString(DB_USUARIOS_CORREO, correo);
+            rs.updateString(DB_USUARIOS_METODOPAGO, metodo);
+            rs.updateInt(DB_USUARIOS_CODIGOSUSCRIPCION, 210);
+            rs.insertRow();
+
+            // Todo bien, cerramos ResultSet y devolvemos true
             rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return activity;
-    }
-
-    // Method that gets an ID and deletes the Activity matching that id
-    public static boolean deleteActivity(int id) {
-        try {
-
-            // Obtenemos la actividad
-            ResultSet rs = getActivityST(id);
-
-            // Si existe y tiene primer registro, lo eliminamos
-            if (rs.first()) {
-                rs.deleteRow();
-                rs.close();
-                return true;
-            } else {
-                return false;
-            }
+            System.out.println("OK!");
+            return true;
 
         } catch (SQLException ex) {
             ex.printStackTrace();
             return false;
         }
+
     }
 
-    public static boolean updateActivity(Activity activity) {
-        try {
-            // Obtenemos la actividad
-            ResultSet rs = getActivityST(activity.getId());
 
-            // Si no existe el Resultset
-            if (rs == null) {
-                return false;
-            }
-            // Si tiene un primer registro, lo actualizamos.
-            if (rs.first()) {
-                rs.updateString(DB_ACT_NOMBRE, activity.getName());
-                rs.updateInt(DB_ACT_DURACION, activity.getDuration());
-                rs.updateString(DB_ACT_HORARIO,activity.getSchedule());
-                rs.updateInt(DB_ACT_TURNO, activity.getTurn());
-                rs.updateInt(DB_ACT_CALORIAS, activity.getCalories());
-                rs.updateInt(DB_ACT_AFORO,activity.getCapacity());
-                rs.updateString(DB_ACT_DIFICULAD, activity.getDifficulty());
-                rs.updateRow();
-                rs.close();
-                return true;
-            } else {
-                return false;
-            }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-    }
 }

@@ -2,6 +2,8 @@ package es.iesmz.dam.pro;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 public class RegistrarPersona extends JDialog {
     private JPanel panelPrincipal;
@@ -12,7 +14,6 @@ public class RegistrarPersona extends JDialog {
     private JTextField txtDNI;
     private JTextField txtTelefono;
     private JTextField txtCorreo;
-    private JTextField txtFechaNacimiento;
     private JRadioButton rbtnEfectivo;
     private JRadioButton rbtnTarjeta;
     private JLabel lblNombre;
@@ -20,7 +21,6 @@ public class RegistrarPersona extends JDialog {
     private JLabel lblDNI;
     private JLabel lblTelefono;
     private JLabel lblCorreo;
-    private JLabel lblFechaNacimiento;
     private JLabel lblMetodoPago;
 
     public RegistrarPersona() {
@@ -53,6 +53,32 @@ public class RegistrarPersona extends JDialog {
 
     private void onRegistrar() {
 
+        String metodo="";
+
+        if (rbtnTarjeta.isSelected()){
+            metodo="Tarjeta";
+        }
+        if (rbtnEfectivo.isSelected()) {
+            metodo="Efectivo";
+        }
+
+        if (DBManager.insertUsuario(txtDNI.getText(), txtNombre.getText(), txtApellidos.getText(), txtTelefono.getText(), txtCorreo.getText(), metodo)){
+
+            JOptionPane.showMessageDialog(null, "Se a guardado correctamente");
+
+            dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "NO se a guardado correctamente");
+        }
+
+    }
+
+    public static void main(String[] args) {
+        DBManager.loadDriver();
+        DBManager.connect();
+        RegistrarPersona dialog = new RegistrarPersona();
+        dialog.setSize(600,400);
+        dialog.setVisible(true);
     }
 
 
