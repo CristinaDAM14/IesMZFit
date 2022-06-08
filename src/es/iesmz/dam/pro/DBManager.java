@@ -6,13 +6,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DBManager {
-    private static Connection conn = null;
+    static Connection conn = null;
     private static final String DB_HOST = "127.0.0.1";
     private static final String DB_PORT = "3306";
     private static final String DB_NAME = "marcosfit";
     private static final String DB_URL = "jdbc:mysql://" + DB_HOST + ":" + DB_PORT + "/" + DB_NAME + "?serverTimezone=UTC";
     private static final String DB_USER = "root";
     private static final String DB_PASS = "";
+
+    // Configuracion tarjetas
+    private static final String DB_TARJETAS = "Tarjetas";
+    private static final String DB_TARJETAS_SELECT = "Select * from "+ DB_TARJETAS;
+    private static final String DB_TARJETAS_NUM = "numero";
+    private static final String DB_TARJETAS_CVV = "CVV";
+    private static final String DB_TARJETAS_NOM = "nombre_titular";
+    private static final String DB_TARJETAS_CAD = "caducidad";
+    private static final String DB_TARJETAS_TIPO = "tipo";
 
 
     // Conf for Activities
@@ -112,6 +121,68 @@ public class DBManager {
         } catch (SQLException ex) {
             ex.printStackTrace();
             return -1;
+        }
+    }
+    //BASE DE DATOS DE TARJETAS
+    public static ResultSet getTablaTarjetas(int resultSetType, int resultSetConcurrency) {
+        try {
+            Statement stmt = conn.createStatement(resultSetType, resultSetConcurrency);
+            ResultSet rs = stmt.executeQuery(DB_TARJETAS_SELECT);
+            //stmt.close();
+            return rs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+    }
+
+    public static ResultSet getTarjetas(String id) {
+        try {
+            // Realizamos la consulta SQL
+            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = DB_TARJETAS_SELECT + " WHERE " + DB_TARJETAS_NOM + "='" + id + "';";
+            //System.out.println(sql);
+            ResultSet rs = stmt.executeQuery(sql);
+            //stmt.close();
+
+            // Si no hay primer registro entonces no existe la tarjeta
+            if (!rs.first()) {
+                return null;
+            }
+
+            // Todo bien, devolvemos la tarjeta
+            return rs;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static boolean insertTarjeta(String numero, String CVV, String nombre, String caducidad, String tipo) {
+        try {
+            // Obtenemos la tabla tarjetas
+            System.out.print("Insertando tarjeta de " + nombre + "...");
+            ResultSet rs = getTablaTarjetas(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+
+            // Insertamos el nuevo registro
+            rs.moveToInsertRow();
+            rs.updateString(DB_TARJETAS_NUM, numero);
+            rs.updateString(DB_TARJETAS_CVV, CVV);
+            rs.updateString(DB_TARJETAS_NOM, nombre);
+            rs.updateString(DB_TARJETAS_CAD, caducidad);
+            rs.updateString(DB_TARJETAS_TIPO, tipo);
+            rs.insertRow();
+
+            // Todo bien, cerramos ResultSet y devolvemos true
+            rs.close();
+            System.out.println("¡Tarjeta guardada!");
+
+            return true;
+
+        } catch (SQLException ex) {
+            return false;
         }
     }
 
@@ -496,4 +567,7 @@ public class DBManager {
         }
     }
 
+    public static Connection getConn() {
+        return conn;
+    }
 }

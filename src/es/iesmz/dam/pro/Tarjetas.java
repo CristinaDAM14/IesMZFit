@@ -94,13 +94,6 @@ public class Tarjetas extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-        Tarjetas dialog = new Tarjetas();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
-
     public static ResultSet getInformacion(String titular) {
         try {
             // Realizamos la consulta SQL
@@ -124,9 +117,12 @@ public class Tarjetas extends JDialog {
         }
     }
 
+
+
     public void getTarjetas(String titular) {
         try {
             // Obtenemos la tarjeta
+
             ResultSet rs = getInformacion(titular);
             if (rs == null || !rs.first()) {
                 System.out.println("La tarjeta de " + titular + " NO EXISTE");
