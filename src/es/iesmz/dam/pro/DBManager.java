@@ -65,7 +65,14 @@ public class DBManager {
     private static final String DB_USUARIOS_CORREO ="correo";
     private static final String DB_USUARIOS_CODIGOSUSCRIPCION ="codigo_suscripcion";
 
-
+    // Conf for suscripciones
+    private static final String DB_SUSCRIPCIONES = "suscripciones";
+    private static final String DB_SUSCRIPCIONES_SELECT = "Select * from "+ DB_SUSCRIPCIONES;
+    private static final String DB_SUSCRIPCIONES_CODIGO = "codigo_suscripcion";
+    private static final String DB_SUSCRIPCIONES_TIPO = "tipo_suscripcion";
+    private static final String DB_SUSCRIPCIONES_INICIO = "inicio_suscripcion";
+    private static final String DB_SUSCRIPCIONES_ULT_PAGO = "ultimo_pago";
+    private static final String DB_SUSCRIPCIONES_PROX_PAGO = "prox_pago";
 
 
     // Loading the jdbc driver
@@ -123,6 +130,49 @@ public class DBManager {
             return -1;
         }
     }
+    //BASE DE DATOS SUSCRIPCIONES
+    public static ResultSet getTablaSuscripciones(int resultSetType, int resultSetConcurrency){
+        try {
+            Statement stmt = conn.createStatement(resultSetType, resultSetConcurrency);
+            ResultSet rs = stmt.executeQuery(DB_SUSCRIPCIONES_SELECT);
+            //stmt.close();
+            return rs;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static boolean insertSuscripciones(String tipo, LocalDate inicio, LocalDate ultimoPago, LocalDate proxPago){
+        try {
+            // Obtenemos la tabla clientes
+            ResultSet rs = getTablaSuscripciones(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            Statement stmt = conn.createStatement();
+            ResultSet rst = stmt.executeQuery("SELECT MAX(codigo_suscripcion) FROM suscripciones");
+
+            // Insertamos el nuevo registro
+            rs.moveToInsertRow();
+            if (rst.next()) {
+                int anyadeCodigo = (rst.getInt(1)+1);
+                rs.updateInt(DB_SUSCRIPCIONES_CODIGO, anyadeCodigo);
+            }
+            rs.updateString(DB_SUSCRIPCIONES_TIPO, tipo);
+            rs.updateDate(DB_SUSCRIPCIONES_INICIO, Date.valueOf(inicio));
+            rs.updateDate(DB_SUSCRIPCIONES_ULT_PAGO, Date.valueOf(ultimoPago));
+            rs.updateDate(DB_SUSCRIPCIONES_PROX_PAGO, Date.valueOf(proxPago));
+            rs.insertRow();
+
+            // Todo bien, cerramos ResultSet y devolvemos true
+            rs.close();
+            return true;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+
     //BASE DE DATOS DE TARJETAS
     public static ResultSet getTablaTarjetas(int resultSetType, int resultSetConcurrency) {
         try {
