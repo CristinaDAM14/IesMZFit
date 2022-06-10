@@ -6,22 +6,21 @@ import java.awt.event.ActionListener;
 public class JDialUserMenu extends JDialog {
     private JPanel userPanel;
     private JButton buttonSeeActivities;
-    private JButton buttonJoinActivities;
+    //private JButton buttonJoinActivities;
     private JButton buttonChangeSubscription;
     private final String user;
-    private final String password;
 
-    public JDialUserMenu(String user, String password) {
+    public JDialUserMenu(String user) {
         setContentPane(userPanel);
         setModal(true);
         this.user = user;
-        this.password = password;
         buttonSeeActivities.setText("Show activities");
-        buttonJoinActivities.setText("Join activity");
+        //buttonJoinActivities.setText("Join activity");
         buttonChangeSubscription.setText("Change subscription");
         buttonSeeActivities.addActionListener(listenerSeeActivities());
         buttonChangeSubscription.addActionListener(listenerChangeSub());
-        buttonJoinActivities.addActionListener(listenerJoinActivity());
+        // Se podria implementar un boton extra para unirse a actividades usando el login(habria que enlazarlo a un id de usuario
+        //buttonJoinActivities.addActionListener(listenerJoinActivity());
     }
 
     private ActionListener listenerChangeSub() {
@@ -40,10 +39,5 @@ public class JDialUserMenu extends JDialog {
         };
     }
 
-    private ActionListener listenerJoinActivity() {
-        return l ->{
-
-        };
-    }
 
 }

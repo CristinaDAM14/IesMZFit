@@ -34,7 +34,6 @@ public class MainMenu extends JFrame {
        then call the DBManager to check if there's a username matching that password in the database
        if there's a user matching that username and password then we call a menu depending of his userlevel
        1 -> Administrator
-       2 -> Monitor
        3 -> User
      */
     private ActionListener listenerSignIn() {
@@ -46,8 +45,7 @@ public class MainMenu extends JFrame {
                 int userLevel = DBManager.getLoginLvl(userName,userPassword);
                 switch (userLevel){
                     case 1 -> menuAdmin();
-                    //case 2 -> menuMonitor();
-                    case 3 -> menuUser(userName,userPassword);
+                    case 3 -> menuUser(userName);
                     default -> JOptionPane.showMessageDialog(null,"Username or Password not matching"
                             ,"Error: Login failed",JOptionPane.ERROR_MESSAGE);
                 }
@@ -56,18 +54,11 @@ public class MainMenu extends JFrame {
     }
 
 
-    private void menuUser(String user, String password) {
-        JDialog userMenu = new JDialUserMenu(user, password);
+    private void menuUser(String user) {
+        JDialog userMenu = new JDialUserMenu(user);
         userMenu.setSize(300,300);
         userMenu.setVisible(true);
     }
-    /*
-    private void menuMonitor() {
-        JDialog monitorMenu = new JDialMonitorMenu();
-        monitorMenu.setSize(300,300);
-        monitorMenu.setVisible(true);
-    }
-     */
 
     private void menuAdmin() {
         JDialog adminMenu = new JDialAdminMenu();

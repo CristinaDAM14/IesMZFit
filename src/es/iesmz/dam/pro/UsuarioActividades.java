@@ -132,10 +132,4 @@ public class UsuarioActividades extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-        UsuarioActividades dialog = new UsuarioActividades();
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
 }

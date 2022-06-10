@@ -65,12 +65,5 @@ public class Suscripciones extends JDialog {
             DBManager.insertSuscripciones("Platinum", LocalDate.now(), LocalDate.now(), prox.plusYears(1));
         }
     }
-    public static void main(String[] args) {
-        DBManager.loadDriver();
-        DBManager.connect();
-        Suscripciones dialog = new Suscripciones();
-        dialog.setSize(600,400);
-        dialog.setVisible(true);
 
-    }
 }
