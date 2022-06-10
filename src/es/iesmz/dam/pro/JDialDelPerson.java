@@ -60,6 +60,7 @@ public class JDialDelPerson extends JDialog {
                 int id = Integer.parseInt(textFieldID.getText());
                 User user = DBManager.getUser(id);
                 if (user != null) {
+                    dataPanel.setVisible(true);
                     poblateTextFields(user);
                 }else {
                     JOptionPane.showMessageDialog(null,"There is not a User matching that id"
