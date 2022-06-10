@@ -15,14 +15,24 @@ public class JDialAdminMenu extends JDialog {
         setContentPane(adminPanel);
         setModal(true);
         buttonExit.setText("Exit");
+        setTitle("Admin Menu");
         buttonManageActivities.setText("Manage Activities");
         buttonManageMonitor.setText("Manage Monitors");
         buttonManageUsers.setText("Manage Users");
         buttonManageCards.setText("Manage Cards");
         buttonManageMonitor.addActionListener(listenerMonitor());
         buttonManageActivities.addActionListener(listenerActivities());
+        buttonManageUsers.addActionListener(listenerUsers());
         buttonExit.addActionListener(l -> dispose());
         buttonManageCards.addActionListener(listenerCards());
+    }
+
+    private ActionListener listenerUsers() {
+        return l ->{
+            JDialog menuUser = new JDialManageUsers();
+            menuUser.setSize(400,600);
+            menuUser.setVisible(true);
+        };
     }
 
     private ActionListener listenerMonitor() {

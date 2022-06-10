@@ -16,6 +16,7 @@ public class UsuarioActividades extends JDialog {
     public UsuarioActividades() {
         setContentPane(contentPane);
         setModal(true);
+        setTitle("User Activities");
         getRootPane().setDefaultButton(buttonOK);
 
         buttonOK.addActionListener(new ActionListener() {

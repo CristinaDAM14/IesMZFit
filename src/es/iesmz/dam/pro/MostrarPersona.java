@@ -13,6 +13,7 @@ public class MostrarPersona extends JDialog {
     public MostrarPersona() {
         setContentPane(seeUsersPanel);
         setModal(true);
+        setTitle("See Users");
         buttonExit.setText("Exit");
         buttonExit.addActionListener(l -> dispose());
         createTable();

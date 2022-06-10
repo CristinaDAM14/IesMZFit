@@ -11,7 +11,6 @@ public class MainMenu extends JFrame {
 
     private JButton buttonSignIn;
     private JPanel loginPanel;
-    private JButton buttonSignUp;
     private JTextField textFieldUserLogin;
     private JPasswordField passwordFieldLogin;
     private JLabel userLabel;
@@ -21,15 +20,9 @@ public class MainMenu extends JFrame {
         super("Marcos Zaragoza Fit");
         setContentPane(loginPanel);
         setText();
-        buttonSignUp.addActionListener(listenerSignUp());
         buttonSignIn.addActionListener(listenerSignIn());
     }
 
-    private ActionListener listenerSignUp() {
-        return l ->{
-
-        };
-    }
     /* Listener for login, checks if textfields username and password are not empty/null
        then call the DBManager to check if there's a username matching that password in the database
        if there's a user matching that username and password then we call a menu depending of his userlevel
@@ -68,7 +61,6 @@ public class MainMenu extends JFrame {
 
     private void setText() {
         buttonSignIn.setText("Sign in");
-        buttonSignUp.setText("Sign up");
         userLabel.setText("User");
         passwdLabel.setText("Password");
     }

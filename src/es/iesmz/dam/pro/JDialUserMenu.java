@@ -13,6 +13,7 @@ public class JDialUserMenu extends JDialog {
     public JDialUserMenu(String user) {
         setContentPane(userPanel);
         setModal(true);
+        setTitle("Menu User");
         this.user = user;
         buttonSeeActivities.setText("Show activities");
         //buttonJoinActivities.setText("Join activity");

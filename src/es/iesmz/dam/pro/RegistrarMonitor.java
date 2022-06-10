@@ -27,6 +27,7 @@ public class RegistrarMonitor extends JDialog {
     public RegistrarMonitor() {
         setContentPane(panelPrincipal);
         setModal(true);
+        setTitle("Add Monitors");
         getRootPane().setDefaultButton(btnCancelar);
 
         ButtonGroup genero = new ButtonGroup();

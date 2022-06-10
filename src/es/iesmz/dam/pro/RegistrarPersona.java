@@ -26,6 +26,7 @@ public class RegistrarPersona extends JDialog {
     public RegistrarPersona() {
         setContentPane(panelPrincipal);
         setModal(true);
+        setTitle("Add Users");
         getRootPane().setDefaultButton(btnCancelar);
 
         ButtonGroup metodosPago = new ButtonGroup();

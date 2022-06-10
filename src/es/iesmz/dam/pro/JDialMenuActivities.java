@@ -14,6 +14,8 @@ public class JDialMenuActivities extends JDialog {
 
     public JDialMenuActivities() {
         setContentPane(panelActivities);
+        setText();
+        setTitle("Menu Activities");
         setModal(true);
         setText();
         buttonExit.addActionListener(l -> dispose());

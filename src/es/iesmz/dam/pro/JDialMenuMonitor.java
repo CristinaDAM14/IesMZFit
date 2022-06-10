@@ -16,6 +16,7 @@ public class JDialMenuMonitor extends JDialog {
         setContentPane(panelMonitor);
         setModal(true);
         setText();
+        setTitle("Menu Monitor");
         buttonExit.addActionListener(l -> dispose());
         buttonSeeMonitors.addActionListener(listenerSeeMonitors());
         buttonAddMonitors.addActionListener(listenerAddMonitors());
@@ -26,7 +27,7 @@ public class JDialMenuMonitor extends JDialog {
 
     private ActionListener listenerUpdtMonitors() {
         return l-> {
-            JDialog updtMonitors = new JDialUpdtActivities();
+            JDialog updtMonitors = new JDialUpdtMonitors();
             updtMonitors.setSize(400, 300);
             updtMonitors.setVisible(true);
         };
@@ -34,7 +35,7 @@ public class JDialMenuMonitor extends JDialog {
 
     private ActionListener listenerDelMonitors() {
         return l ->{
-            JDialog delMonitors = new JDialDelActivities();
+            JDialog delMonitors = new JDialDelMonitor();
             delMonitors.setSize(400,300);
             delMonitors.setVisible(true);
         };

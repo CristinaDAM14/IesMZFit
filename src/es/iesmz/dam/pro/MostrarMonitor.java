@@ -13,6 +13,7 @@ public class MostrarMonitor extends JDialog {
     public MostrarMonitor() {
         setContentPane(seeMonitorsPanel);
         setModal(true);
+        setTitle("See Monitors");
         buttonExit.setText("Exit");
         buttonExit.addActionListener(l -> dispose());
         createTable();

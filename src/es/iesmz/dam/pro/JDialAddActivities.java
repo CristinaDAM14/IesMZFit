@@ -20,6 +20,7 @@ public class JDialAddActivities extends JDialog {
     public JDialAddActivities() {
         setContentPane(addPanel);
         setModal(true);
+        setTitle("Add Activities");
         buttonExit.addActionListener(l -> dispose());
         buttonClean.addActionListener(listenerClean());
         buttonSave.addActionListener(listenerSave());

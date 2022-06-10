@@ -13,6 +13,7 @@ public class JDialSeeActivities extends JDialog {
     public JDialSeeActivities() {
         setContentPane(seeActivitiesPanel);
         setModal(true);
+        setTitle("See Activities");
         buttonExit.setText("Exit");
         buttonExit.addActionListener(l -> dispose());
         createTable();

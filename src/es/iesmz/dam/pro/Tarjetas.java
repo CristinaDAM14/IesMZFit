@@ -35,6 +35,7 @@ public class Tarjetas extends JDialog {
     public Tarjetas() {
         setContentPane(PanelGeneral);
         setModal(true);
+        setTitle("Cards");
         getRootPane().setDefaultButton(buttonOK);
 
         buttonOK.addActionListener(new ActionListener() {
