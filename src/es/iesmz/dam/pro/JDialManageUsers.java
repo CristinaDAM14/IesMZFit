@@ -61,10 +61,10 @@ public class JDialManageUsers extends JDialog {
 
 
     private void setText() {
-        buttonAddUsers.setText("Add monitors");
-        buttonSeeUsers.setText("See monitors");
-        buttonDelUsers.setText("Delete monitors");
-        buttonUpdtUsers.setText("Update monitors");
+        buttonAddUsers.setText("Add Users");
+        buttonSeeUsers.setText("See Users");
+        buttonDelUsers.setText("Delete Users");
+        buttonUpdtUsers.setText("Update Users");
         buttonExit.setText("Exit");
     }
 }

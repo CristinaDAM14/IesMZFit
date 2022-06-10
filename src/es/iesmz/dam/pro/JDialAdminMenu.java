@@ -52,7 +52,7 @@ public class JDialAdminMenu extends JDialog {
     private ActionListener listenerCards()  {
         return l->{
             JDialog menuCard = new Tarjetas();
-            menuCard.setSize(400,600);
+            menuCard.setSize(700,400);
             menuCard.setVisible(true);
         };
     }

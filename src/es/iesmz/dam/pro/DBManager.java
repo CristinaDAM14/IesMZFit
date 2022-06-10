@@ -636,7 +636,7 @@ public class DBManager {
     public static List<User> getUsersList() {
         List<User> users = new ArrayList<>();
         try {
-            ResultSet rs = getTablaMonitores(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            ResultSet rs = getTablaUsuarios(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
             while (rs.next()) {
                 int id = rs.getInt(DB_USUARIOS_CODIGO);
                 String dni = rs.getString(DB_USUARIOS_DNI);
