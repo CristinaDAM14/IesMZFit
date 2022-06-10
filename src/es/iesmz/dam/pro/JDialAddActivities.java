@@ -35,7 +35,7 @@ public class JDialAddActivities extends JDialog {
             int capacity = Integer.parseInt(textFieldCapacity.getText());
             String schedule = textFieldSchedule.getText();
             String difficulty = textFieldDifficulty.getText();
-            String name = textFieldName.getName();
+            String name = textFieldName.getText();
             Activity activity = new Activity(name,duration,schedule,turn,calories,capacity,difficulty);
             if(DBManager.addActivity(activity)){
                 JOptionPane.showMessageDialog(null,"The activity has been added correctly"

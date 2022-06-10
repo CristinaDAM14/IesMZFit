@@ -383,7 +383,17 @@ public class DBManager {
             ResultSet rs = getActivities(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
 
             // Insertamos el nuevo registro
+            if( rs == null){
+                return false;
+            }
             rs.moveToInsertRow();
+
+            Statement smtm = conn.createStatement();
+            ResultSet rst = smtm.executeQuery("SELECT MAX(codigo_usuarios) FROM usuarios");
+            if (rst.next()) {
+                int codigo = (rst.getInt(1) + 1);
+                rs.updateInt(DB_ACT_ID, codigo);
+            }
             rs.updateString(DB_ACT_NOMBRE, activity.getName());
             rs.updateInt(DB_ACT_DURACION, activity.getDuration());
             rs.updateString(DB_ACT_HORARIO, activity.getSchedule());
