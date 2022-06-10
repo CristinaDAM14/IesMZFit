@@ -16,7 +16,7 @@ public class DBManager {
 
     // Configuracion tarjetas
     private static final String DB_TARJETAS = "Tarjetas";
-    private static final String DB_TARJETAS_SELECT = "Select * from "+ DB_TARJETAS;
+    private static final String DB_TARJETAS_SELECT = "Select * from " + DB_TARJETAS;
     private static final String DB_TARJETAS_NUM = "numero";
     private static final String DB_TARJETAS_CVV = "CVV";
     private static final String DB_TARJETAS_NOM = "nombre_titular";
@@ -26,7 +26,7 @@ public class DBManager {
 
     // Conf for Activities
     private static final String DB_ACTIVIDADES = "Actividades";
-    private static final String DB_ACTIVIDADES_SELECT = "Select * from "+ DB_ACTIVIDADES;
+    private static final String DB_ACTIVIDADES_SELECT = "Select * from " + DB_ACTIVIDADES;
     private static final String DB_ACT_ID = "codigo_actividades";
     private static final String DB_ACT_NOMBRE = "nombre";
     private static final String DB_ACT_DURACION = "duracion";
@@ -39,35 +39,35 @@ public class DBManager {
 
     // Conf for logins
     private static final String DB_LOGIN = "Login";
-    private static final String DB_LOGIN_SELECT = "Select * from "+ DB_LOGIN;
+    private static final String DB_LOGIN_SELECT = "Select * from " + DB_LOGIN;
     private static final String DB_LOGIN_USR = "Username";
     private static final String DB_LOGIN_PSWD = "Password";
     private static final String DB_LOGIN_USRLVL = "UserLevel";
 
     // Conf for Monitors
     private static final String DB_MONITORES = "monitores";
-    private static final String DB_MONITOR_SELECT = "Select * from "+ DB_MONITORES;
-    private static final String DB_MONITOR_CODIGO ="codigo_monitores";
-    private static final String DB_MONITOR_NOMBRE ="Nombre";
-    private static final String DB_MONITOR_APELLIDOS ="apellidos";
-    private static final String DB_MONITOR_NACIMIENTO ="Fecha_nac";
-    private static final String DB_MONITOR_GENERO ="Genero";
+    private static final String DB_MONITOR_SELECT = "Select * from " + DB_MONITORES;
+    private static final String DB_MONITOR_CODIGO = "codigo_monitores";
+    private static final String DB_MONITOR_NOMBRE = "Nombre";
+    private static final String DB_MONITOR_APELLIDOS = "apellidos";
+    private static final String DB_MONITOR_NACIMIENTO = "Fecha_nac";
+    private static final String DB_MONITOR_GENERO = "Genero";
 
     // Conf for Users
     private static final String DB_USUARIOS = "usuarios";
-    private static final String DB_USUARIOS_SELECT = "Select * from "+ DB_USUARIOS;
-    private static final String DB_USUARIOS_CODIGO ="codigo_usuarios";
-    private static final String DB_USUARIOS_DNI ="DNI";
-    private static final String DB_USUARIOS_NOMBRE ="nombre";
-    private static final String DB_USUARIOS_APELLIDOS ="apellidos";
-    private static final String DB_USUARIOS_TELEFONO ="telefono";
-    private static final String DB_USUARIOS_METODOPAGO ="metodo_pago";
-    private static final String DB_USUARIOS_CORREO ="correo";
-    private static final String DB_USUARIOS_CODIGOSUSCRIPCION ="codigo_suscripcion";
+    private static final String DB_USUARIOS_SELECT = "Select * from " + DB_USUARIOS;
+    private static final String DB_USUARIOS_CODIGO = "codigo_usuarios";
+    private static final String DB_USUARIOS_DNI = "DNI";
+    private static final String DB_USUARIOS_NOMBRE = "nombre";
+    private static final String DB_USUARIOS_APELLIDOS = "apellidos";
+    private static final String DB_USUARIOS_TELEFONO = "telefono";
+    private static final String DB_USUARIOS_METODOPAGO = "metodo_pago";
+    private static final String DB_USUARIOS_CORREO = "correo";
+    private static final String DB_USUARIOS_CODIGOSUSCRIPCION = "codigo_suscripcion";
 
     // Conf for suscripciones
     private static final String DB_SUSCRIPCIONES = "suscripciones";
-    private static final String DB_SUSCRIPCIONES_SELECT = "Select * from "+ DB_SUSCRIPCIONES;
+    private static final String DB_SUSCRIPCIONES_SELECT = "Select * from " + DB_SUSCRIPCIONES;
     private static final String DB_SUSCRIPCIONES_CODIGO = "codigo_suscripcion";
     private static final String DB_SUSCRIPCIONES_TIPO = "tipo_suscripcion";
     private static final String DB_SUSCRIPCIONES_INICIO = "inicio_suscripcion";
@@ -89,7 +89,7 @@ public class DBManager {
     // Conecting with the db
     public static boolean connect() {
         try {
-            conn = DriverManager.getConnection(DB_URL,DB_USER,DB_PASS);
+            conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASS);
             return true;
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -110,10 +110,10 @@ public class DBManager {
     // Methods for login table
 
     // Method that returns the user lvl for an specific username + password, returns -1 if it doesn't exists
-    public static int getLoginLvl(String userName, String password){
+    public static int getLoginLvl(String userName, String password) {
         try {
             Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            String sql = DB_LOGIN_SELECT + " WHERE " + DB_LOGIN_USR + "='" + userName +"' AND " + DB_LOGIN_PSWD + "='"+ password + "';";
+            String sql = DB_LOGIN_SELECT + " WHERE " + DB_LOGIN_USR + "='" + userName + "' AND " + DB_LOGIN_PSWD + "='" + password + "';";
             ResultSet rs = stmt.executeQuery(sql);
 
             // if there's not records, we return -1
@@ -130,20 +130,21 @@ public class DBManager {
             return -1;
         }
     }
+
     //BASE DE DATOS SUSCRIPCIONES
-    public static ResultSet getTablaSuscripciones(int resultSetType, int resultSetConcurrency){
+    public static ResultSet getTablaSuscripciones(int resultSetType, int resultSetConcurrency) {
         try {
             Statement stmt = conn.createStatement(resultSetType, resultSetConcurrency);
             ResultSet rs = stmt.executeQuery(DB_SUSCRIPCIONES_SELECT);
             //stmt.close();
             return rs;
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    public static boolean insertSuscripciones(String tipo, LocalDate inicio, LocalDate ultimoPago, LocalDate proxPago){
+    public static boolean insertSuscripciones(String tipo, LocalDate inicio, LocalDate ultimoPago, LocalDate proxPago) {
         try {
             // Obtenemos la tabla clientes
             ResultSet rs = getTablaSuscripciones(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -153,7 +154,7 @@ public class DBManager {
             // Insertamos el nuevo registro
             rs.moveToInsertRow();
             if (rst.next()) {
-                int anyadeCodigo = (rst.getInt(1)+1);
+                int anyadeCodigo = (rst.getInt(1) + 1);
                 rs.updateInt(DB_SUSCRIPCIONES_CODIGO, anyadeCodigo);
             }
             rs.updateString(DB_SUSCRIPCIONES_TIPO, tipo);
@@ -250,7 +251,7 @@ public class DBManager {
 
     }
 
-    public static boolean insertMonitor(Monitor monitor){
+    public static boolean insertMonitor(Monitor monitor) {
 
         try {
             // Obtenemos la tabla monitores
@@ -260,8 +261,8 @@ public class DBManager {
 
 
             rs.moveToInsertRow();
-            if (rst.next()){
-                int codigo = (rst.getInt(1)+1);
+            if (rst.next()) {
+                int codigo = (rst.getInt(1) + 1);
                 rs.updateInt(DB_MONITOR_CODIGO, codigo);
             }
             rs.updateString(DB_MONITOR_NOMBRE, monitor.getName());
@@ -281,6 +282,7 @@ public class DBManager {
         }
 
     }
+
     public static ResultSet getMonitorST(int id) {
         try {
             // Realizamos la consulta SQL
@@ -307,14 +309,14 @@ public class DBManager {
         Monitor monitor = null;
         try {
             ResultSet rs = getMonitorST(id);
-            if (rs == null){
+            if (rs == null) {
                 return monitor;
             }
             String name = rs.getString(DB_MONITOR_NOMBRE);
             String lastName = rs.getString(DB_MONITOR_NOMBRE);
-            LocalDate birthDate =rs.getDate(DB_MONITOR_NACIMIENTO).toLocalDate();
+            LocalDate birthDate = rs.getDate(DB_MONITOR_NACIMIENTO).toLocalDate();
             String gender = rs.getString(DB_MONITOR_GENERO);
-            monitor = new Monitor(id,name,lastName,birthDate,gender);
+            monitor = new Monitor(id, name, lastName, birthDate, gender);
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -322,7 +324,7 @@ public class DBManager {
         return monitor;
     }
 
-    public static List<Monitor> getMonitorsList(){
+    public static List<Monitor> getMonitorsList() {
         List<Monitor> monitors = new ArrayList<>();
         try {
             ResultSet rs = getTablaMonitores(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
@@ -330,9 +332,9 @@ public class DBManager {
                 int id = rs.getInt(DB_MONITOR_CODIGO);
                 String name = rs.getString(DB_MONITOR_NOMBRE);
                 String lastName = rs.getString(DB_MONITOR_NOMBRE);
-                LocalDate birthDate =rs.getDate(DB_MONITOR_NACIMIENTO).toLocalDate();
+                LocalDate birthDate = rs.getDate(DB_MONITOR_NACIMIENTO).toLocalDate();
                 String gender = rs.getString(DB_MONITOR_GENERO);
-                monitors.add( new Monitor(id,name,lastName,birthDate,gender));
+                monitors.add(new Monitor(id, name, lastName, birthDate, gender));
             }
             rs.close();
         } catch (SQLException e) {
@@ -341,71 +343,6 @@ public class DBManager {
         return monitors;
     }
 
-    public static ResultSet getTablaUsuarios(int resultSetType, int resultSetConcurrency) {
-        try {
-            Statement stmt = conn.createStatement(resultSetType, resultSetConcurrency);
-            ResultSet rs = stmt.executeQuery(DB_USUARIOS_SELECT);
-            return rs;
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-    public static List<User> getUsersList(){
-        List<User> users = new ArrayList<>();
-        try {
-            ResultSet rs = getTablaMonitores(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
-            while (rs.next()) {
-                int id = rs.getInt(DB_USUARIOS_CODIGO);
-                String dni = rs.getString(DB_USUARIOS_DNI);
-                String name = rs.getString(DB_USUARIOS_NOMBRE);
-                String lastName = rs.getString(DB_USUARIOS_APELLIDOS);
-                String phone =rs.getString(DB_USUARIOS_TELEFONO);
-                String email = rs.getString(DB_USUARIOS_CORREO);
-                String paymentMethod = rs.getString(DB_USUARIOS_METODOPAGO);
-                int subID = rs.getInt(DB_USUARIOS_CODIGOSUSCRIPCION);
-                users.add(new User(id,dni,name,lastName,phone,email,paymentMethod,subID));
-            }
-            rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return users;
-    }
-
-    public static boolean insertUsuario(User user){
-
-        try {
-            // Obtenemos la tabla usuarios
-            ResultSet rs = getTablaUsuarios(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
-            Statement smtm = conn.createStatement();
-            ResultSet rst = smtm.executeQuery("SELECT MAX(codigo_usuarios) FROM usuarios");
-
-            rs.moveToInsertRow();
-            if (rst.next()){
-                int codigo = (rst.getInt(1)+1);
-                rs.updateInt(DB_USUARIOS_CODIGO, codigo);
-            }
-            rs.updateString(DB_USUARIOS_DNI, user.getDni());
-            rs.updateString(DB_USUARIOS_NOMBRE, user.getName());
-            rs.updateString(DB_USUARIOS_APELLIDOS, user.getLastName());
-            rs.updateString(DB_USUARIOS_TELEFONO, user.getPhone());
-            rs.updateString(DB_USUARIOS_CORREO, user.getEmail());
-            rs.updateString(DB_USUARIOS_METODOPAGO, user.getPaymentMethod());
-            rs.updateInt(DB_USUARIOS_CODIGOSUSCRIPCION, 210);
-            rs.insertRow();
-
-            // Todo bien, cerramos ResultSet y devolvemos true
-            rs.close();
-            System.out.println("OK!");
-            return true;
-
-        } catch (SQLException ex) {
-            ex.printStackTrace();
-            return false;
-        }
-
-    }
     // Methods for Activities
 
     public static ResultSet getActivities(int resultSetType, int resultSetConcurrency) {
@@ -418,7 +355,7 @@ public class DBManager {
         }
     }
 
-    public static List<Activity> getActivitiesList(){
+    public static List<Activity> getActivitiesList() {
         List<Activity> activities = new ArrayList<>();
         try {
             ResultSet rs = getActivities(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
@@ -431,7 +368,7 @@ public class DBManager {
                 int calorias = rs.getInt(DB_ACT_CALORIAS);
                 int aforo = rs.getInt(DB_ACT_AFORO);
                 String dificultad = rs.getString(DB_ACT_DIFICULAD);
-                activities.add(new Activity(id,nombre,duracion,horario,turno,calorias,aforo,dificultad));
+                activities.add(new Activity(id, nombre, duracion, horario, turno, calorias, aforo, dificultad));
             }
             rs.close();
         } catch (SQLException e) {
@@ -449,10 +386,10 @@ public class DBManager {
             rs.moveToInsertRow();
             rs.updateString(DB_ACT_NOMBRE, activity.getName());
             rs.updateInt(DB_ACT_DURACION, activity.getDuration());
-            rs.updateString(DB_ACT_HORARIO,activity.getSchedule());
+            rs.updateString(DB_ACT_HORARIO, activity.getSchedule());
             rs.updateInt(DB_ACT_TURNO, activity.getTurn());
             rs.updateInt(DB_ACT_CALORIAS, activity.getCalories());
-            rs.updateInt(DB_ACT_AFORO,activity.getCapacity());
+            rs.updateInt(DB_ACT_AFORO, activity.getCapacity());
             rs.updateString(DB_ACT_DIFICULAD, activity.getDifficulty());
             rs.insertRow();
 
@@ -495,7 +432,7 @@ public class DBManager {
         Activity activity = null;
         try {
             ResultSet rs = getActivityST(id);
-            if (rs == null){
+            if (rs == null) {
                 return activity;
             }
             String nombre = rs.getString(DB_ACT_NOMBRE);
@@ -505,7 +442,7 @@ public class DBManager {
             int calorias = rs.getInt(DB_ACT_CALORIAS);
             int aforo = rs.getInt(DB_ACT_AFORO);
             String dificultad = rs.getString(DB_ACT_DIFICULAD);
-            activity = new Activity(id,nombre,duracion,horario,turno,calorias,aforo,dificultad);
+            activity = new Activity(id, nombre, duracion, horario, turno, calorias, aforo, dificultad);
             rs.close();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -548,10 +485,10 @@ public class DBManager {
             if (rs.first()) {
                 rs.updateString(DB_ACT_NOMBRE, activity.getName());
                 rs.updateInt(DB_ACT_DURACION, activity.getDuration());
-                rs.updateString(DB_ACT_HORARIO,activity.getSchedule());
+                rs.updateString(DB_ACT_HORARIO, activity.getSchedule());
                 rs.updateInt(DB_ACT_TURNO, activity.getTurn());
                 rs.updateInt(DB_ACT_CALORIAS, activity.getCalories());
-                rs.updateInt(DB_ACT_AFORO,activity.getCapacity());
+                rs.updateInt(DB_ACT_AFORO, activity.getCapacity());
                 rs.updateString(DB_ACT_DIFICULAD, activity.getDifficulty());
                 rs.updateRow();
                 rs.close();
@@ -567,6 +504,7 @@ public class DBManager {
 
 
     // Methods for Monitors
+
     public static boolean updateMonitor(Monitor monitor) {
         try {
             // Obtenemos el monitor
@@ -579,7 +517,7 @@ public class DBManager {
             // Si tiene un primer registro, lo actualizamos.
             if (rs.first()) {
                 rs.updateString(DB_MONITOR_NOMBRE, monitor.getName());
-                rs.updateString(DB_MONITOR_APELLIDOS,monitor.getLastName());
+                rs.updateString(DB_MONITOR_APELLIDOS, monitor.getLastName());
                 rs.updateDate(DB_MONITOR_NACIMIENTO, monitor.getBirthDate());
                 rs.updateString(DB_MONITOR_GENERO, monitor.getGender());
                 rs.updateRow();
@@ -617,7 +555,165 @@ public class DBManager {
         }
     }
 
-    public static Connection getConn() {
-        return conn;
+    // METHODS FOR USERS
+
+    // method that gets and ID and returns the User matching that ID
+    public static User getUser(int id) {
+        User user = null;
+        try {
+            ResultSet rs = getUserST(id);
+            if (rs == null) {
+                return user;
+            }
+            String dni = rs.getString(DB_USUARIOS_DNI);
+            String name = rs.getString(DB_USUARIOS_NOMBRE);
+            String lastName = rs.getString(DB_USUARIOS_APELLIDOS);
+            String phone = rs.getString(DB_USUARIOS_TELEFONO);
+            String email = rs.getString(DB_USUARIOS_CORREO);
+            String paymentMethod = rs.getString(DB_USUARIOS_METODOPAGO);
+            int subID = rs.getInt(DB_USUARIOS_CODIGOSUSCRIPCION);
+            rs.close();
+            user = new User(id,dni,name,lastName,phone,email,paymentMethod,subID);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    // method that gets and ID and returns a resultset with the query results of that id
+    public static ResultSet getUserST(int id) {
+        try {
+            // Realizamos la consulta SQL
+            Statement stmt = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            String sql = DB_USUARIOS_SELECT + " WHERE " + DB_USUARIOS_CODIGO + "='" + id + "';";
+            ResultSet rs = stmt.executeQuery(sql);
+
+            // Si no hay primer registro entonces no existe el user
+            if (!rs.first()) {
+                return null;
+            }
+
+            // si existe devolvemos el resulset con el user.
+            return rs;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+    public static boolean deleteUser(int id) {
+        try {
+
+            // Obtenemos el User
+            ResultSet rs = getUserST(id);
+
+            // Si existe y tiene primer registro, lo eliminamos
+            if (rs.first()) {
+                rs.deleteRow();
+                rs.close();
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+
+    public static ResultSet getTablaUsuarios(int resultSetType, int resultSetConcurrency) {
+        try {
+            Statement stmt = conn.createStatement(resultSetType, resultSetConcurrency);
+            ResultSet rs = stmt.executeQuery(DB_USUARIOS_SELECT);
+            return rs;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public static List<User> getUsersList() {
+        List<User> users = new ArrayList<>();
+        try {
+            ResultSet rs = getTablaMonitores(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_READ_ONLY);
+            while (rs.next()) {
+                int id = rs.getInt(DB_USUARIOS_CODIGO);
+                String dni = rs.getString(DB_USUARIOS_DNI);
+                String name = rs.getString(DB_USUARIOS_NOMBRE);
+                String lastName = rs.getString(DB_USUARIOS_APELLIDOS);
+                String phone = rs.getString(DB_USUARIOS_TELEFONO);
+                String email = rs.getString(DB_USUARIOS_CORREO);
+                String paymentMethod = rs.getString(DB_USUARIOS_METODOPAGO);
+                int subID = rs.getInt(DB_USUARIOS_CODIGOSUSCRIPCION);
+                users.add(new User(id, dni, name, lastName, phone, email, paymentMethod, subID));
+            }
+            rs.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
+    public static boolean insertUsuario(User user) {
+
+        try {
+            // Obtenemos la tabla usuarios
+            ResultSet rs = getTablaUsuarios(ResultSet.TYPE_FORWARD_ONLY, ResultSet.CONCUR_UPDATABLE);
+            Statement smtm = conn.createStatement();
+            ResultSet rst = smtm.executeQuery("SELECT MAX(codigo_usuarios) FROM usuarios");
+
+            rs.moveToInsertRow();
+            if (rst.next()) {
+                int codigo = (rst.getInt(1) + 1);
+                rs.updateInt(DB_USUARIOS_CODIGO, codigo);
+            }
+            rs.updateString(DB_USUARIOS_DNI, user.getDni());
+            rs.updateString(DB_USUARIOS_NOMBRE, user.getName());
+            rs.updateString(DB_USUARIOS_APELLIDOS, user.getLastName());
+            rs.updateString(DB_USUARIOS_TELEFONO, user.getPhone());
+            rs.updateString(DB_USUARIOS_CORREO, user.getEmail());
+            rs.updateString(DB_USUARIOS_METODOPAGO, user.getPaymentMethod());
+            rs.updateInt(DB_USUARIOS_CODIGOSUSCRIPCION, 210);
+            rs.insertRow();
+
+            // Todo bien, cerramos ResultSet y devolvemos true
+            rs.close();
+            return true;
+
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
+    public static boolean updateUser(User user) {
+        try {
+            // Obtenemos el User
+            ResultSet rs = getUserST(user.getId());
+
+            // Si no existe el Resultset
+            if (rs == null) {
+                return false;
+            }
+            // Si tiene un primer registro, lo actualizamos.
+            if (rs.first()) {
+                rs.updateString(DB_USUARIOS_DNI, user.getDni());
+                rs.updateString(DB_USUARIOS_NOMBRE, user.getName());
+                rs.updateString(DB_USUARIOS_APELLIDOS, user.getLastName());
+                rs.updateString(DB_USUARIOS_TELEFONO, user.getPhone());
+                rs.updateString(DB_USUARIOS_CORREO, user.getEmail());
+                rs.updateString(DB_USUARIOS_METODOPAGO, user.getPaymentMethod());
+                rs.updateInt(DB_USUARIOS_CODIGOSUSCRIPCION, 210);
+                rs.updateRow();
+                rs.close();
+                return true;
+            } else {
+                return false;
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            return false;
+        }
+
     }
 }

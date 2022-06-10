@@ -26,7 +26,7 @@ public class JDialUserMenu extends JDialog {
 
     private ActionListener listenerChangeSub() {
         return l ->{
-            JDialog eligeSuscripcion = new Suscripciones(user,password);
+            JDialog eligeSuscripcion = new Suscripciones();
             eligeSuscripcion.setVisible(true);
             eligeSuscripcion.setSize(400,600);
         };
